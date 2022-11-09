@@ -1,5 +1,7 @@
 export const MainView = () => {
   return (
-    <h1>chcesz się bić?</h1>
+    <div>
+        Goodbye World
+    </div>
   )
 }
