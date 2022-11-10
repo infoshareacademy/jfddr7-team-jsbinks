@@ -46,7 +46,7 @@ export function SignIn() {
       .catch((error) => {
         console.log(error.message);
       })
-      navigate('/home')
+      navigate('/wallet')
     }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
