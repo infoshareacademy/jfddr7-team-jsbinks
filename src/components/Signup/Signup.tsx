@@ -1,75 +1,149 @@
-import "./Signup.module.css"
+import * as React from 'react';
+import { Link as RLink, useNavigate } from "react-router-dom"
 import {firebaseAuth} from "../../index"
 import {useState} from "react"
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { Link, useNavigate } from "react-router-dom"
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
-
-export const SignUp = () => {
-const [email, setEmail] = useState("")
-const [password, setPassword] = useState("")
-const navigate = useNavigate();
-
-const handleSignUp = () => {
-  const user = {email, password}
-  createUserWithEmailAndPassword(firebaseAuth, email, password)
-  .then(cred=>{
-    console.log("user created", cred.user)
-  })
-  .catch((error) => {
-    console.log(error.message);
-  })
-  navigate('/signin')
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        JS-Binks Limited
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
 
-    return (
-      <>
-        <form className="ui form on">
-          <div className="field">
-            <label>Email</label>
-            <input 
-              type="email" 
-              name="email" 
-              placeholder="Your E-mail"
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="field">
-            <label>Password</label>
-            <input 
-              type="password" 
-              name="password" 
-              placeholder="Password"
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          {/* <div className="field">
-            <div className="ui checkbox">
-              <input type="checkbox" tabIndex={0} className="hidden"/>
-              <label>I agree to the Terms and Conditions</label>
-            </div>
-          </div> */}
-        </form>
-        <div className="field">
-          <button 
-            className="ui button" 
-            type="submit"
-            onClick={handleSignUp}
-          >
-              Sign Up
-          </button>
-          <Link to='/signin'>
-            <button 
-              className="ui button" 
+const theme = createTheme();
+
+export const SignUp = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+      const user = {email, password}
+      createUserWithEmailAndPassword(firebaseAuth, email, password)
+      .then(cred=>{
+        console.log("user created", cred.user)
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+      navigate('/signin')
+    }
+
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              {/* <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid> */}
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={e => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  onChange={e => setPassword(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Button
               type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
             >
-                Go To Sign In
-            </button>
-          </Link>
-        </div>
-      </>
-    )
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <RLink to='/signin'>
+                  <Link variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </RLink>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </ThemeProvider>
+  );
 }
