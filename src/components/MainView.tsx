@@ -1,10 +1,12 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useContext} from 'react';
 import {format} from 'date-fns';
 import { firebaseAuth } from '../index';
 import { signOut } from 'firebase/auth';
 import { firebaseDb } from '../index';
 import {doc, setDoc} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
+import { ListProps } from './HistoryList';
+import { StoreContext } from '../StoreProvider';
 //materail UI
 import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Box, AppBar, Toolbar, IconButton, Avatar, Grid, Paper} from "@mui/material"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -36,6 +38,7 @@ const useStyles = makeStyles({
 export const MainView: React.FC = () => {
   const navigate = useNavigate()
   const classes = useStyles()
+  const { username } = useContext(StoreContext);
 
   const data = new Date();
 
@@ -47,15 +50,22 @@ export const MainView: React.FC = () => {
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState<string>('');
 
+  const [fullList, setFullList] = useState<ListProps[]>([])
+
+  //function for date
   const handleChange = (newValue: Date | null) => {
+    console.log(newValue)
     if(newValue) {
       setEntryDate(newValue);
     }
   };
 
+  //main function for form submittion
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log( incomeValue ,category, amount, format(entryDate, 'do MMMM Y'));
+    console.log( incomeValue ,category, amount, entryDate);
+    const inputList: ListProps = {date: entryDate, incomeValue, category, amount}
+    setFullList([...fullList, inputList])
   } 
 
     // {
@@ -104,7 +114,7 @@ export const MainView: React.FC = () => {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Powodzenia w nierównej walce z inflacją!
+            Powodzenia w nierównej walce z inflacją {username}!
           </Typography>
           <IconButton color="inherit" onClick={onLogout}>
                 Wyloguj
@@ -174,7 +184,7 @@ export const MainView: React.FC = () => {
         </Container>
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            <HistoryList />
+            <HistoryList fullList={fullList}/>
           </Paper>
         </Grid>
       </Box>

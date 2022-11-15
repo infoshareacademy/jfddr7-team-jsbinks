@@ -6,7 +6,7 @@ import {getAuth} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter, BrowserRouter } from 'react-router-dom';
 import { StoreProvider } from './StoreProvider';
 
 
