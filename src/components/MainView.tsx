@@ -128,7 +128,7 @@ export const MainView: React.FC = () => {
           <form className={classes.formStyle} onSubmit={handleSubmit}>
           <Typography variant="h3">Expense Tracker</Typography>
           <Typography variant="h4">Balance</Typography>
-          <Typography variant="h6">$0</Typography>
+          <Typography variant="h6">${amount}</Typography>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Income</InputLabel>
               <Select

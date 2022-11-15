@@ -59,6 +59,7 @@ export const SignUp = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* <Box></Box> */}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -73,7 +74,7 @@ export const SignUp = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign up to Budget Planner
           </Typography>
           <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
