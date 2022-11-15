@@ -9,6 +9,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { StoreProvider } from './StoreProvider';
 
+
 const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
 export const firebaseDb = getFirestore(firebaseApp);
