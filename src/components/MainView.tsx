@@ -13,6 +13,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { grey } from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
 import { useNavigate } from 'react-router-dom';
+import HistoryList from './HistoryList';
 
 const useStyles = makeStyles({
   container: {
@@ -83,8 +84,11 @@ export const MainView: React.FC = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar position="absolute">
+    <Box sx={{ display: 'flex' ,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'}}>
+      <AppBar position="sticky">
         <Toolbar
           sx={{
             pr: '24px', // right padding 
@@ -107,69 +111,73 @@ export const MainView: React.FC = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="sm" color="primary" className={classes.container}>
-        <form className={classes.formStyle} onSubmit={handleSubmit}>
-        <Typography variant="h3">Expense Tracker</Typography>
-        <Typography variant="h4">Balance</Typography>
-        <Typography variant="h6">$0</Typography>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Income</InputLabel>
-            <Select
-              onChange={(event) => setIncomeValue(event.target.value)}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={incomeValue}
-              label="Income"
-            >
-              <MenuItem value='Income'>Income</MenuItem>
-              <MenuItem value='Expense'>Expense</MenuItem>
-            </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              onChange={(event) => setCategory(event.target.value)}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={category}
-              label="Category"
-            >
-              <MenuItem value='Business'>Bussines</MenuItem>
-              <MenuItem value='Shopping'>Shopping</MenuItem>
-              <MenuItem value='Investment'>Investment</MenuItem>
-              <MenuItem value='Health'>Health</MenuItem>
-            </Select>
-        </FormControl>
-        <FormControl fullWidth>
-            <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              value={amount}
-              onChange={(event) => setAmount(event.target.value)}
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              label="Amount"
-              required
-            />
+      <Box
+        component="main" 
+      >
+        <Container maxWidth="sm" color="primary" className={classes.container}>
+          <form className={classes.formStyle} onSubmit={handleSubmit}>
+          <Typography variant="h3">Expense Tracker</Typography>
+          <Typography variant="h4">Balance</Typography>
+          <Typography variant="h6">$0</Typography>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Income</InputLabel>
+              <Select
+                onChange={(event) => setIncomeValue(event.target.value)}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={incomeValue}
+                label="Income"
+              >
+                <MenuItem value='Income'>Income</MenuItem>
+                <MenuItem value='Expense'>Expense</MenuItem>
+              </Select>
           </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DesktopDatePicker
-            label="Date desktop"
-            inputFormat="DD/MM/YYYY"
-            value={entryDate}
-            onChange={handleChange}
-            renderInput={(params) => <TextField fullWidth {...params} />}
-          />
-          </LocalizationProvider>
-          <Button type='submit' variant="contained" size="large">
-            Add New Item
-          </Button>
-          </form>
-      </Container>
-      <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  
-                </Paper>
-              </Grid>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                onChange={(event) => setCategory(event.target.value)}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={category}
+                label="Category"
+              >
+                <MenuItem value='Business'>Bussines</MenuItem>
+                <MenuItem value='Shopping'>Shopping</MenuItem>
+                <MenuItem value='Investment'>Investment</MenuItem>
+                <MenuItem value='Health'>Health</MenuItem>
+              </Select>
+          </FormControl>
+          <FormControl fullWidth>
+              <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                value={amount}
+                onChange={(event) => setAmount(event.target.value)}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                label="Amount"
+                required
+              />
+            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="DD/MM/YYYY"
+              value={entryDate}
+              onChange={handleChange}
+              renderInput={(params) => <TextField fullWidth {...params} />}
+            />
+            </LocalizationProvider>
+            <Button type='submit' variant="contained" size="large">
+              Add New Item
+            </Button>
+            </form>
+        </Container>
+        <Grid item xs={12}>
+          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+            <HistoryList />
+          </Paper>
+        </Grid>
+      </Box>
     </Box>
     
   )
