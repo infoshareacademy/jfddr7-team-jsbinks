@@ -45,11 +45,12 @@ export const MainView: React.FC = () => {
     if(newValue) {
       setEntryDate(newValue);
     }
-  }};
+  };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(incomeValue, category, amount, format(entryDate, 'do MMMM Y'));
+  } // tu był błąd
 
     // {
     //   user:
