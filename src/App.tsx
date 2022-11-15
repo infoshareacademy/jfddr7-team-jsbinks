@@ -30,7 +30,7 @@ function App() {
     } else {
       navigate('/signin');
     }
-  }, [login, navigate]);
+  }, [login]);
 
   return (
     <Routes>
