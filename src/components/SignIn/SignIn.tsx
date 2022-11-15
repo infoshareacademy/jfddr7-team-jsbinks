@@ -37,7 +37,7 @@ export function SignIn() {
   const [password, setPassword] = useState("")
   const navigate = useNavigate();
     
-    const handleSignUp = () => {
+    const handleSignIn = () => {
       const user = {email, password}
       signInWithEmailAndPassword(firebaseAuth, email, password)
       .then(cred=>{
@@ -83,7 +83,7 @@ export function SignIn() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleSignIn} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
