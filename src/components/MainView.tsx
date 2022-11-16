@@ -1,12 +1,13 @@
-import React, {useRef, useState, useContext} from 'react';
-import {format} from 'date-fns';
+import React, {useState, useContext} from 'react';
+import dayjs, { Dayjs } from 'dayjs';
 import { firebaseAuth } from '../index';
 import { signOut } from 'firebase/auth';
 import { firebaseDb } from '../index';
 import {doc, setDoc} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
-import { ListProps } from './HistoryList';
+// import { ListProps } from './HistoryList';
 import { StoreContext } from '../StoreProvider';
+import { IFormData } from '../types';
 //materail UI
 import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Box, AppBar, Toolbar, IconButton, Avatar, Grid, Paper} from "@mui/material"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -36,52 +37,46 @@ const useStyles = makeStyles({
 
 
 export const MainView: React.FC = () => {
+
   const navigate = useNavigate()
   const classes = useStyles()
-  const { username } = useContext(StoreContext);
+  const { username, operation, setOperation } = useContext(StoreContext);
+  
 
-  const data = new Date();
-
-  const [entryDate, setEntryDate] = React.useState<Date>(
-    data
-  );
+  const [entryDate, setEntryDate] = React.useState<Dayjs | null>(null);
 
   const [incomeValue, setIncomeValue] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState<string>('');
 
-  const [fullList, setFullList] = useState<ListProps[]>([])
+  // const [fullList, setFullList] = useState<ListProps[]>([])
 
-  //function for date
-  const handleChange = (newValue: Date | null) => {
-    console.log(newValue)
-    if(newValue) {
-      setEntryDate(newValue);
-    }
-  };
-
-  //main function for form submittion
+  
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>) => {
+
     e.preventDefault();
     console.log( incomeValue ,category, amount, entryDate);
-    const inputList: ListProps = {date: entryDate, incomeValue, category, amount}
-    setFullList([...fullList, inputList])
+  //   const inputList: ListProps = {date: entryDate ? dayjs(entryDate.toString()).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'), incomeValue, category, amount}
+  //   setFullList([...fullList, inputList])
   } 
 
-    // {
-    //   user:
-    //   data:
-    //   category:
-    //   amout:
-    //   data:
-    // }
 
     const addOperation = async (): Promise<void> => {
+      console.log(entryDate);
+      const OperationObject: IFormData = {
+        amount: Number(amount),
+        category: category,
+        type: incomeValue,
+        date: entryDate ? dayjs(entryDate.toString()).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'), 
+      }
       try {
         const opperationId = uuid();
-        await setDoc(doc(firebaseDb, 'opperations', opperationId), {
-          
+        await setDoc(doc(firebaseDb, 'operations', opperationId), {
+            name: OperationObject,
+            userEmail: username,
         });
+        const updatedOperations = [...operation, OperationObject];
+        setOperation(updatedOperations);
       } catch (error) {
         console.log(error);
       }
@@ -173,18 +168,20 @@ export const MainView: React.FC = () => {
               label="Date desktop"
               inputFormat="DD/MM/YYYY"
               value={entryDate}
-              onChange={handleChange}
+              onChange={(newValue) => {
+                setEntryDate(newValue);
+              }}
               renderInput={(params) => <TextField fullWidth {...params} />}
             />
             </LocalizationProvider>
-            <Button type='submit' variant="contained" size="large">
+            <Button type='submit' variant="contained" size="large" onClick={addOperation}>
               Add New Item
             </Button>
             </form>
         </Container>
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            <HistoryList fullList={fullList}/>
+            <HistoryList />
           </Paper>
         </Grid>
       </Box>

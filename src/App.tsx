@@ -1,10 +1,11 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useContext} from 'react';
 import './App.css';
 import { SignUp } from './components/Signup/Signup';
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { SignIn } from './components/SignIn/SignIn';
 import { MainView } from './components/MainView';
-import { firebaseAuth } from './index';
+import {query, where, getDocs, collection} from 'firebase/firestore';
+import { firebaseAuth, firebaseDb } from './index';
 import { onAuthStateChanged } from 'firebase/auth';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import { StoreContext } from './StoreProvider';
@@ -12,7 +13,7 @@ import { StoreContext } from './StoreProvider';
 function App() {
   const navigate = useNavigate();
   // const [login, setLogin] = useState('');
-  const {username, setUsername} = useContext(StoreContext)
+  const {username, setUsername, setOperation} = useContext(StoreContext)
 
 
   useEffect((): void => {
@@ -21,12 +22,28 @@ function App() {
         const userEmail = user.email;
         setUsername(userEmail || '');
       try {
-        console.log(userEmail);
+        const operation: {
+          amount: number,
+          category: string,
+          type: string,
+          date: string,
+        }[] = [];
+        const q = query(collection(firebaseDb, 'operations'), where('userEmail', '==', userEmail));
+        const operationsSnapshot = await getDocs(q);
+        operationsSnapshot.forEach((operate) => {
+          const {name: singleOperation} = operate.data();
+          operation.push(singleOperation);
+        });
+        setOperation(operation)
         } catch (error) {
           console.log(error);
         }
-    }})
-  }, []);
+    } else {
+      setUsername('');
+      setOperation([]);
+    }
+  })
+  }, [setOperation, setUsername]);
 
   useEffect((): void => {
     if(username) {

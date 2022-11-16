@@ -78,27 +78,6 @@ export const SignUp = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -135,9 +114,7 @@ export const SignUp = () => {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <RLink to='/signin'>
-                  <Link variant="body2">
                     Already have an account? Sign in
-                  </Link>
                 </RLink>
               </Grid>
             </Grid>
