@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormEvent } from 'react';
 import { Link as RLink, useNavigate } from "react-router-dom";
 import {firebaseAuth} from "../../index"
 import {useState} from "react"
@@ -35,18 +36,16 @@ const theme = createTheme();
 export function SignIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState('');
   const navigate = useNavigate();
     
-    const handleSignIn = () => {
-      const user = {email, password}
-      signInWithEmailAndPassword(firebaseAuth, email, password)
-      .then(cred=>{
-        console.log("user logedin", cred.user)
-      })
-      .catch((error) => {
-        console.log(error.message);
-      })
-      navigate('/wallet')
+    const handleSignIn = async (): Promise<void> => {
+      try {
+        await signInWithEmailAndPassword(firebaseAuth, email, password);
+        navigate('/wallet');
+      } catch ({message}) {
+        setError("Wrong email or password");
+      }
     }
 
   return (
@@ -82,6 +81,7 @@ export function SignIn() {
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in to Budget Planner
+              {error}
             </Typography>
             <Box component="form" noValidate onSubmit={handleSignIn} sx={{ mt: 1 }}>
               <TextField
@@ -126,9 +126,10 @@ export function SignIn() {
                 </Grid>
                 <Grid item>
                   <RLink to='/signup'>
-                    <Link href="#" variant="body2">
                       {"Don't have an account? Sign Up"}
-                    </Link>
+                    {/* <Link href="/signup" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link> */}
                   </RLink>
                 </Grid>
               </Grid>
