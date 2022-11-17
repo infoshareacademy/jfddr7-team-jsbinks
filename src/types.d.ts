@@ -9,6 +9,7 @@ interface ITransaction {
 }
 
 interface IFormData {
+  id: string;
   amount: number;
   category: string;
   type: string;

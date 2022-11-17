@@ -7,7 +7,7 @@ import {doc, setDoc} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 // import { ListProps } from './HistoryList';
 import { StoreContext } from '../StoreProvider';
-import { IFormData } from '../types';
+import { OperationObj } from '../StoreProvider';
 //materail UI
 import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Box, AppBar, Toolbar, IconButton, Avatar, Grid, Paper} from "@mui/material"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -125,15 +125,15 @@ export const MainView: React.FC = () => {
 
     const addOperation = async (): Promise<void> => {
       console.log(entryDate);
-      const OperationObject: IFormData = {
+      const OperationObject: OperationObj = {
+        id: uuid(),
         amount: Number(amount),
         category: category,
         type: incomeValue,
         date: entryDate ? dayjs(entryDate.toString()).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'), 
       }
       try {
-        const opperationId = uuid();
-        await setDoc(doc(firebaseDb, 'operations', opperationId), {
+        await setDoc(doc(firebaseDb, 'operations', OperationObject.id), {
             name: OperationObject,
             userEmail: username,
         });
