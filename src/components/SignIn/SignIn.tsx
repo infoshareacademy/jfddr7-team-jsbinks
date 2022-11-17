@@ -17,6 +17,52 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+  interface Palette {
+    neutral: Palette['primary'];
+  }
+  interface PaletteOptions {
+    neutral: PaletteOptions['primary'],
+  }
+
+  interface PaletteColor {
+    darker?: string;
+  }
+  interface SimplePaletteColorOptions {
+    darker?: string;
+  }
+  interface ThemeOptions {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+}
+
+
+const theme = createTheme(
+  {
+    status: {
+      danger: '#e53e3e',
+    },
+    palette: {
+      primary: {
+        main: '#4caf50',
+      },
+      secondary: {
+        main: '#ffca28',
+      },
+      neutral: {
+        main: '#64748B',
+        contrastText: '#fff',
+      },
+    },
+  });
+
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,8 +75,6 @@ function Copyright(props: any) {
     </Typography>
   );
 }
-
-const theme = createTheme();
 
 export function SignIn() {
   const [email, setEmail] = useState("")
@@ -55,8 +99,6 @@ export function SignIn() {
         }
       })
     }
-  
-  console.log(error)
 
   return (
     <ThemeProvider theme={theme}>
@@ -114,12 +156,18 @@ export function SignIn() {
                   </RLink>
                 </Grid>
               </Grid>
-              <Grid container justifyContent='center'>
+              <Grid container sx={{
+              marginTop: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
                 {error && <Typography variant='h6' color='error'>{error}</Typography>}
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
+          <img src={'../logo.png'}/>
       </Container>
     </ThemeProvider>
   );
