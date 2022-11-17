@@ -152,7 +152,10 @@ export function SignIn() {
               <Grid container justifyContent='flex-end'>
                 <Grid item>
                   <RLink to='/signup'>
-                      Nie masz konta? Zarejestruj się tutaj
+                    <Button color='primary'>
+                    Nie masz konta? Zarejestruj się tutaj
+                    </Button>
+                      
                   </RLink>
                 </Grid>
               </Grid>
@@ -167,7 +170,6 @@ export function SignIn() {
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
-          <img src={'../logo.png'}/>
       </Container>
     </ThemeProvider>
   );

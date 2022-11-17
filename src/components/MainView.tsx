@@ -163,7 +163,7 @@ export const MainView: React.FC = () => {
           }}
         >
           <IconButton>
-            <Avatar alt="User avatar" src="./logo.png"/>
+            <Avatar alt="User avatar" sx={{backgroundImage: './logo.png'}}/>
           </IconButton>
           <Typography
             component="h1"
