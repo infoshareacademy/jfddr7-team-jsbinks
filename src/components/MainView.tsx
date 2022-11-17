@@ -5,6 +5,7 @@ import { signOut } from 'firebase/auth';
 import { firebaseDb } from '../index';
 import {doc, setDoc} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
+import { IncomeChart } from './Charts/IncomeChart';
 // import { ListProps } from './HistoryList';
 import { StoreContext } from '../StoreProvider';
 import { OperationObj } from '../StoreProvider';
@@ -249,6 +250,7 @@ export const MainView: React.FC = () => {
         </Grid>
       </Box>
     </Box>
+    <IncomeChart categoryName='Income' operations={operation}/>
     </ThemeProvider>
   )
 }
