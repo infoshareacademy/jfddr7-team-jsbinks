@@ -1,7 +1,8 @@
 import {useState, FC, ReactElement, createContext} from 'react';
 
 
-interface OperationObj {
+export interface OperationObj {
+    id: string,
     amount: number,
     category: string,
     type: string,

@@ -1,20 +1,25 @@
 import * as React from 'react';
 import {useContext} from 'react';
-import {Table, TableBody, TableCell, TableHead, TableRow, Typography} from '@mui/material'
+import {Table, TableBody, TableCell, TableHead, TableRow, Typography, Button} from '@mui/material'
+import { doc, deleteDoc } from "firebase/firestore";
+import { firebaseDb } from '../index';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { StoreContext } from '../StoreProvider';
 
 
-// export type ListProps ={
-//   date: string,
-//   incomeValue: string,
-//   category: string,
-//   amount: string,
-// }
-// const HistoryList: React.FC<{fullList: ListProps[]}> = ( {fullList} )
-
  const HistoryList = () => {
+  const {operation, setOperation} = useContext(StoreContext);
 
-  const {operation} = useContext(StoreContext);
+  const deleteItem = async (id: string): Promise<void> => {
+    try {
+      await deleteDoc(doc(firebaseDb, "operations", id));
+      const filtrOperation = operation.filter((element) => id !== element.id);
+      setOperation(filtrOperation);
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <React.Fragment>
@@ -35,6 +40,9 @@ import { StoreContext } from '../StoreProvider';
               <TableCell>{row.type}</TableCell>
               <TableCell>{row.category}</TableCell>
               <TableCell align="right">{`$${row.amount}`}</TableCell>
+              <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleteItem(row.id)}>
+                Delete
+              </Button>
             </TableRow>
           ))}
         </TableBody>
