@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/jfddr7-team-jsbinks/static/css/main.019a29f3.css",
-    "main.js": "/jfddr7-team-jsbinks/static/js/main.efaa9541.js",
+    "main.js": "/jfddr7-team-jsbinks/static/js/main.bbc24908.js",
     "index.html": "/jfddr7-team-jsbinks/index.html",
     "main.019a29f3.css.map": "/jfddr7-team-jsbinks/static/css/main.019a29f3.css.map",
-    "main.efaa9541.js.map": "/jfddr7-team-jsbinks/static/js/main.efaa9541.js.map"
+    "main.bbc24908.js.map": "/jfddr7-team-jsbinks/static/js/main.bbc24908.js.map"
   },
   "entrypoints": [
     "static/css/main.019a29f3.css",
-    "static/js/main.efaa9541.js"
+    "static/js/main.bbc24908.js"
   ]
 }
