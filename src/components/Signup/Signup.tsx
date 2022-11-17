@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -63,7 +64,10 @@ const theme = createTheme(
     },
     palette: {
       primary: {
-        main: '#2e7d32',
+        main: '#4caf50',
+      },
+      secondary: {
+        main: '#ffca28',
       },
       neutral: {
         main: '#64748B',
@@ -89,11 +93,12 @@ export const SignUp = () => {
         navigate('/signin')
       })
       .catch(e => {
-        console.log(e.code)
         if (e.code === 'auth/email-already-in-use') {
           setError('Mamy już takiego użytkownika w aplikacji')
         } else if (e.code === 'auth/weak-password') {
           setError('Hasło musi mieć co najmniej 6 znaków')
+        } else if (e.code === 'auth/invalid-email') {
+          setError('Podaj prawidłowy adres e-mail')
         } else {
           setError('Coś poszło nie tak, spróbuj ponownie później')
         }
@@ -171,9 +176,16 @@ export const SignUp = () => {
                 </RLink>
               </Grid>
             </Grid>
+            <Grid container sx={{
+              marginTop: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+                {error && <Typography variant='h6' color='error'>{error}</Typography>}
+              </Grid>
           </Box>
         </Box>
-              {error && <Typography sx={{ mt: 5 }}  variant='h6' color='error'>{error}</Typography>}
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>

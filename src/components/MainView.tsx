@@ -15,8 +15,57 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { grey } from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import HistoryList from './HistoryList';
+
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+
+  interface Palette {
+    neutral: Palette['primary'];
+  }
+  interface PaletteOptions {
+    neutral: PaletteOptions['primary'];
+  }
+
+  interface PaletteColor {
+    darker?: string;
+  }
+  interface SimplePaletteColorOptions {
+    darker?: string;
+  }
+  interface ThemeOptions {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+}
+
+
+const theme = createTheme(
+  {
+    status: {
+      danger: '#e53e3e',
+    },
+    palette: {
+      primary: {
+        main: '#4caf50',
+      },
+      secondary: {
+        main: '#ffca28',
+      },
+      neutral: {
+        main: '#64748B',
+        contrastText: '#fff',
+      },
+    },
+  }
+);
 
 const useStyles = makeStyles({
   container: {
@@ -59,7 +108,7 @@ export const MainView: React.FC = () => {
       } else if (curr.type === 'Expense') {
         result = result - Number(curr.amount);
       }
-      
+
       return result
     }, 0)
     setBalance(newBalance)
@@ -102,6 +151,7 @@ export const MainView: React.FC = () => {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <Box sx={{ display: 'flex' ,
       flexDirection: 'column',
       justifyContent: 'center',
@@ -134,11 +184,11 @@ export const MainView: React.FC = () => {
       >
         <Container maxWidth="sm" color="primary" className={classes.container}>
           <form className={classes.formStyle} onSubmit={handleSubmit}>
-          <Typography variant="h3">Expense Tracker</Typography>
-          <Typography variant="h4">Balance</Typography>
+          <Typography variant="h3">Budżetówka</Typography>
+          <Typography variant="h4">Twoje Saldo</Typography>
           {balance !== null && <Typography variant="h6">${balance}</Typography>}
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Income</InputLabel>
+            <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
               <Select
                 onChange={(event) => setIncomeValue(event.target.value)}
                 labelId="demo-simple-select-label"
@@ -146,12 +196,12 @@ export const MainView: React.FC = () => {
                 value={incomeValue}
                 label="Income"
               >
-                <MenuItem value='Income'>Income</MenuItem>
-                <MenuItem value='Expense'>Expense</MenuItem>
+                <MenuItem value='Income'>Wpływy</MenuItem>
+                <MenuItem value='Expense'>Wydatki</MenuItem>
               </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <InputLabel id="demo-simple-select-label">Kategoria</InputLabel>
               <Select
                 onChange={(event) => setCategory(event.target.value)}
                 labelId="demo-simple-select-label"
@@ -159,14 +209,14 @@ export const MainView: React.FC = () => {
                 value={category}
                 label="Category"
               >
-                <MenuItem value='Business'>Bussines</MenuItem>
-                <MenuItem value='Shopping'>Shopping</MenuItem>
-                <MenuItem value='Investment'>Investment</MenuItem>
-                <MenuItem value='Health'>Health</MenuItem>
+                <MenuItem value='Business'>Biznes</MenuItem>
+                <MenuItem value='Shopping'>Zakupy</MenuItem>
+                <MenuItem value='Investment'>Inwestycje</MenuItem>
+                <MenuItem value='Health'>Zdrowie</MenuItem>
               </Select>
           </FormControl>
           <FormControl fullWidth>
-              <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-amount">Wartość</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-amount"
                 value={amount}
@@ -178,7 +228,7 @@ export const MainView: React.FC = () => {
             </FormControl>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
-              label="Date desktop"
+              label="Data"
               inputFormat="DD/MM/YYYY"
               value={entryDate}
               onChange={(newValue) => {
@@ -188,7 +238,7 @@ export const MainView: React.FC = () => {
             />
             </LocalizationProvider>
             <Button type='submit' variant="contained" size="large" onClick={addOperation}>
-              Add New Item
+              Dodaj operację
             </Button>
             </form>
         </Container>
@@ -199,6 +249,6 @@ export const MainView: React.FC = () => {
         </Grid>
       </Box>
     </Box>
-    
+    </ThemeProvider>
   )
 }
