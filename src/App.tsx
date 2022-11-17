@@ -4,6 +4,7 @@ import { SignUp } from './components/Signup/Signup';
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { SignIn } from './components/SignIn/SignIn';
 import { MainView } from './components/MainView';
+import NotFound from './components/NotFound';
 import {query, where, getDocs, collection} from 'firebase/firestore';
 import { firebaseAuth, firebaseDb } from './index';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -60,6 +61,7 @@ function App() {
        <Route element={<ProtectedRoutes/>}>
         <Route path='wallet' element={<MainView/>} />
        </Route>
+       <Route path='*' element={<NotFound/>}></Route>
        
     </Routes>
    

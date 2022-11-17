@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { firebaseAuth } from '../index';
 import { signOut } from 'firebase/auth';
@@ -48,9 +48,22 @@ export const MainView: React.FC = () => {
   const [incomeValue, setIncomeValue] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState<string>('');
+  const [balance, setBalance] = useState<number | null>(null);
 
-  // const [fullList, setFullList] = useState<ListProps[]>([])
+  useEffect(() => {
+    const newBalance = operation.reduce((prev, curr) => {
+      let result = prev;
 
+      if (curr.type === 'Income') {
+        result = result + Number(curr.amount);
+      } else if (curr.type === 'Expense') {
+        result = result - Number(curr.amount);
+      }
+      
+      return result
+    }, 0)
+    setBalance(newBalance)
+  }, [operation])
   
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>) => {
 
@@ -123,7 +136,7 @@ export const MainView: React.FC = () => {
           <form className={classes.formStyle} onSubmit={handleSubmit}>
           <Typography variant="h3">Expense Tracker</Typography>
           <Typography variant="h4">Balance</Typography>
-          <Typography variant="h6">${amount}</Typography>
+          {balance !== null && <Typography variant="h6">${balance}</Typography>}
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Income</InputLabel>
               <Select

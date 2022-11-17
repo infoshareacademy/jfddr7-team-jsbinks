@@ -4,8 +4,7 @@ import { Link as RLink, useNavigate } from "react-router-dom";
 import {firebaseAuth} from "../../index"
 import {useState} from "react"
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import { Container, Avatar, Button } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -23,7 +22,7 @@ function Copyright(props: any) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        JS-Binks Limited
+        JS-Binks Sp z o.o.
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -39,38 +38,33 @@ export function SignIn() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
     
-    const handleSignIn = async (): Promise<void> => {
-      try {
-        await signInWithEmailAndPassword(firebaseAuth, email, password);
-        navigate('/wallet');
-      } catch ({message}) {
-        setError("Wrong email or password");
-      }
+    const handleSignIn = (event: React.SyntheticEvent): void => {
+      event.preventDefault()
+      signInWithEmailAndPassword(firebaseAuth, email, password)
+      .then(cred => {
+        console.log('user logged in', cred.user)
+        navigate('/wallet')
+      })
+      .catch (e => {
+        if (e.code === 'auth/wrong-password') {
+          setError("Błędny mail lub hasło")
+        } else if (e.code === 'auth/user-not-found') {
+          setError("Nie ma takiego użytkownikia")
+        } else {
+          setError('Coś poszło nie tak, spróbuj ponownie później')
+        }
+      })
     }
+  
+  console.log(error)
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Container component="main" maxWidth='xs'>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
-              mx: 4,
+              marginTop: 8,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -80,8 +74,7 @@ export function SignIn() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in to Budget Planner
-              {error}
+              Proszę zaloguj się do Budżetówki
             </Typography>
             <Box component="form" noValidate onSubmit={handleSignIn} sx={{ mt: 1 }}>
               <TextField
@@ -89,7 +82,7 @@ export function SignIn() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Twój E-mail"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -100,15 +93,11 @@ export function SignIn() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Hasło"
                 type="password"
                 id="password"
                 autoComplete="current-password"
                 onChange={e => setPassword(e.target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
               />
               <Button
                 type="submit"
@@ -116,28 +105,22 @@ export function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Loguje się
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
+              <Grid container justifyContent='flex-end'>
                 <Grid item>
                   <RLink to='/signup'>
-                      {"Don't have an account? Sign Up"}
-                    {/* <Link href="/signup" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link> */}
+                      Nie masz konta? Zarejestruj się tutaj
                   </RLink>
                 </Grid>
+              </Grid>
+              <Grid container justifyContent='center'>
+                {error && <Typography variant='h6' color='error'>{error}</Typography>}
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
-        </Grid>
-      </Grid>
+      </Container>
     </ThemeProvider>
   );
 }
