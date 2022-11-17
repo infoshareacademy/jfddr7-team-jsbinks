@@ -19,7 +19,7 @@ const renderColorfulLegendText = (value: string, entry: any) => {
 //   ];
 type CategoryName = "Income" | "Expense"
 
-export const IncomeChart = ({ operations, categoryName }: {categoryName: CategoryName,operations: OperationObj[]}) => {
+export const Chart = ({ operations, categoryName }: {categoryName: CategoryName,operations: OperationObj[]}) => {
 
   const getRandomColor = ()=> ("#" + Math.floor(Math.random()*16777215).toString(16))
 
