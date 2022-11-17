@@ -20,7 +20,7 @@ function Copyright(props: any) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        JS-Binks Limited
+        JS-Binks Sp z o.o.
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,23 +28,76 @@ function Copyright(props: any) {
   );
 }
 
-const theme = createTheme();
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+
+  interface Palette {
+    neutral: Palette['primary'];
+  }
+  interface PaletteOptions {
+    neutral: PaletteOptions['primary'];
+  }
+
+  interface PaletteColor {
+    darker?: string;
+  }
+  interface SimplePaletteColorOptions {
+    darker?: string;
+  }
+  interface ThemeOptions {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+}
+
+
+const theme = createTheme(
+  {
+    status: {
+      danger: '#e53e3e',
+    },
+    palette: {
+      primary: {
+        main: '#2e7d32',
+      },
+      neutral: {
+        main: '#64748B',
+        contrastText: '#fff',
+      },
+    },
+  }
+);
 
 export const SignUp = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSignUp = () => {
-      const user = {email, password}
+  const handleSignUp = (event: React.SyntheticEvent): void => {
+    event.preventDefault();     
+    const user = {email, password}
+
       createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(cred=>{
         console.log("user created", cred.user)
+        navigate('/signin')
       })
-      .catch((error) => {
-        console.log(error.message);
+      .catch(e => {
+        console.log(e.code)
+        if (e.code === 'auth/email-already-in-use') {
+          setError('Mamy już takiego użytkownika w aplikacji')
+        } else if (e.code === 'auth/weak-password') {
+          setError('Hasło musi mieć co najmniej 6 znaków')
+        } else {
+          setError('Coś poszło nie tak, spróbuj ponownie później')
+        }
       })
-      navigate('/signin')
     }
 
 
@@ -74,7 +127,7 @@ export const SignUp = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up to Budget Planner
+            Proszę zarejestruj się do Budżetówki
           </Typography>
           <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -83,7 +136,7 @@ export const SignUp = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Adres E-mail"
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -95,7 +148,7 @@ export const SignUp = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Hasło"
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -109,17 +162,18 @@ export const SignUp = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Rejestruję się
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <RLink to='/signin'>
-                    Already have an account? Sign in
+                    Masz już konto? Zaloguj się tutaj
                 </RLink>
               </Grid>
             </Grid>
           </Box>
         </Box>
+              {error && <Typography sx={{ mt: 5 }}  variant='h6' color='error'>{error}</Typography>}
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
