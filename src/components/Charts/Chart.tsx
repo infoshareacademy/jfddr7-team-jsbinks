@@ -64,8 +64,14 @@ const expenseCategories: Category[] = [
 export const Chart = ({ operations, categoryName }: {categoryName: CategoryName, operations: OperationObj[]}) => {
 
   const getRandomColor = ()=> ("#" + Math.floor(Math.random()*16777215).toString(16)) // generates random color for chart
+
+  
   const filterdOperations = operations.filter((operation) => operation.type === categoryName);
-  const data = filterdOperations.map((operation) => ({name: operation.category, value: operation.amount, fill: getRandomColor()}))
+  const data = filterdOperations.map((operation) => ({
+    name: operation.category, 
+    value: operation.amount, 
+    fill: getRandomColor()
+  }))
   const categoryValue = filterdOperations.reduce((prev, curr) => prev + curr.amount, 0)
 
   return (
