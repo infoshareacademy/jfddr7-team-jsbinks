@@ -23,14 +23,14 @@ import { StoreContext } from '../StoreProvider';
 
   return (
     <React.Fragment>
-      <Typography>Recent Inputs</Typography>
+      <Typography>Ostatnie operacje</Typography>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Category</TableCell>
-            <TableCell align="right">Amount</TableCell>
+            <TableCell>Data</TableCell>
+            <TableCell>Typ</TableCell>
+            <TableCell>Kategoria</TableCell>
+            <TableCell align="right">Wartość</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

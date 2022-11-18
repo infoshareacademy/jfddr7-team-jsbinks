@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth';
 import { firebaseDb } from '../index';
 import {doc, setDoc} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
-import { Chart } from './Charts/IncomeChart';
+import { Chart } from './Charts/Chart';
 // import { ListProps } from './HistoryList';
 import { StoreContext } from '../StoreProvider';
 import { OperationObj } from '../StoreProvider';
