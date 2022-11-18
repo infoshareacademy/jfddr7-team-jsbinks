@@ -26,32 +26,32 @@ const expenseColors: string[] = [
 ];
 
 export const Incomes: Category[] = [
-  { type: "Business", amount: 0, color: incomeColors[0] },
-  { type: "Investments", amount: 0, color: incomeColors[1] },
-  { type: "Extra income", amount: 0, color: incomeColors[2] },
-  { type: "Deposits", amount: 0, color: incomeColors[3] },
-  { type: "Lottery", amount: 0, color: incomeColors[4] },
-  { type: "Gifts", amount: 0, color: incomeColors[5] },
-  { type: "Salary", amount: 0, color: incomeColors[6] },
-  { type: "Savings", amount: 0, color: incomeColors[7] },
-  { type: "Rental income", amount: 0, color: incomeColors[8] },
+  { name: "Business", value: 0, fill: incomeColors[0] },
+  { name: "Investments", value: 0, fill: incomeColors[1] },
+  { name: "Extra income", value: 0, fill: incomeColors[2] },
+  { name: "Deposits", value: 0, fill: incomeColors[3] },
+  { name: "Lottery", value: 0, fill: incomeColors[4] },
+  { name: "Gifts", value: 0, fill: incomeColors[5] },
+  { name: "Salary", value: 0, fill: incomeColors[6] },
+  { name: "Savings", value: 0, fill: incomeColors[7] },
+  { name: "Rental income", value: 0, fill: incomeColors[8] },
 ];
 
 export const Expenses: Category[] = [
-  { type: "Bills", amount: 0, color: expenseColors[0] },
-  { type: "Car", amount: 0, color: expenseColors[1] },
-  { type: "Clothes", amount: 0, color: expenseColors[2] },
-  { type: "Travel", amount: 0, color: expenseColors[3] },
-  { type: "Food", amount: 0, color: expenseColors[4] },
-  { type: "Shopping", amount: 0, color: expenseColors[5] },
-  { type: "House", amount: 0, color: expenseColors[6] },
-  { type: "Entertainment", amount: 0, color: expenseColors[7] },
-  { type: "Phone", amount: 0, color: expenseColors[8] },
-  { type: "Pets", amount: 0, color: expenseColors[9] },
-  { type: "Other", amount: 0, color: expenseColors[10] },
+  { name: "Bills", value: 0, fill: expenseColors[0] },
+  { name: "Car", value: 0, fill: expenseColors[1] },
+  { name: "Clothes", value: 0, fill: expenseColors[2] },
+  { name: "Travel", value: 0, fill: expenseColors[3] },
+  { name: "Food", value: 0, fill: expenseColors[4] },
+  { name: "Shopping", value: 0, fill: expenseColors[5] },
+  { name: "House", value: 0, fill: expenseColors[6] },
+  { name: "Entertainment", value: 0, fill: expenseColors[7] },
+  { name: "Phone", value: 0, fill: expenseColors[8] },
+  { name: "Pets", value: 0, fill: expenseColors[9] },
+  { name: "Other", value: 0, fill: expenseColors[10] },
 ];
 
-export const resetCategories: () => void = () => {
-  Incomes.forEach((c) => (c.amount = 0));
-  Expenses.forEach((c) => (c.amount = 0));
-};
+// export const resetCategories: () => void = () => {
+//   Incomes.forEach((c) => (c.amount = 0));
+//   Expenses.forEach((c) => (c.amount = 0));
+// };
