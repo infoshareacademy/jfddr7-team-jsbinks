@@ -23,10 +23,11 @@ import { theme } from '../theme/theme'
 
 const useStyles = makeStyles({
   container: {
-    boxShadow: '0 0 1px 1px lightgray',
+    boxShadow: '0 1px 1px 0 lightgray',
     borderRadius: 10,
     padding: 20,
-    backgroundColor: grey[200],
+    backgroundColor: grey[100],
+    marginBottom: 20
     },
 
   formStyle: {
@@ -138,23 +139,23 @@ export const MainView: React.FC = () => {
       </AppBar>
       <Grid 
         container 
-        spacing={1} 
+        spacing={2} 
         direction="row"
-        justifyContent="space-around"
+        justifyContent="center"
         alignItems="flex-start"
       >
         <Grid item xs={3}>
           <Chart categoryName='Income' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories} />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Box
           component="main" 
           >
             <Container maxWidth="sm" color="primary" className={classes.container}>
               <form className={classes.formStyle} onSubmit={handleSubmit}>
-              <Typography variant="h3">Budżetówka</Typography>
+              <Typography variant="h5">Budżetówka</Typography>
               <Typography variant="h4">Twoje Saldo</Typography>
-              {balance !== null && <Typography variant="h6" color={balance > 0 ? green[500] : red[500]}>${balance}</Typography>}
+              {balance !== null && <Typography variant="h3" color={balance > 0 ? green[500] : red[500]}>${balance}</Typography>}
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
                   <Select

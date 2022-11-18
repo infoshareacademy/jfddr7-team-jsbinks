@@ -46,23 +46,25 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
           </CardContent>
         </Card>
       </Box>
-      <Box>
-        <ResponsiveContainer width='100%' height={320}>
+      <Box sx={{
+        paddingBottom: 2
+      }}>
+        <ResponsiveContainer width='100%' minWidth={200} height={300}>
           <PieChart >
             <Legend
-              height={16}
+              height={0}
               iconType="circle"
-              layout="vertical"
+              layout="horizontal"
               verticalAlign="bottom"
               iconSize={10}
               formatter={renderColorfulLegendText}
             />
             <Pie
               data={data}
-              cx={120}
-              cy={200}
+              cx="50%"
+              cy="40%"
               innerRadius={30}
-              outerRadius={70}
+              outerRadius={65}
               fill="#8884d8"
               paddingAngle={0}
               dataKey="value"
