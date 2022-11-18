@@ -25,7 +25,7 @@ import { red, green } from "@mui/material/colors"
 
 
   return (
-    <Grid item xs={11} alignItems='center' justifyContent='center'>
+    <Grid item xs={9} alignItems='center' justifyContent='center'>
       <Typography>Ostatnie operacje</Typography>
       <Table size="small" stickyHeader>
         <TableHead>
@@ -43,7 +43,7 @@ import { red, green } from "@mui/material/colors"
             <TableRow key={index}>
               <TableCell>{row.type === 'Income' ? <AddIcon sx={{color: green[500]}}/> : <RemoveIcon sx={{color: red[500]}}/>}</TableCell>
               <TableCell>{row.date}</TableCell>
-              <TableCell>{row.type === 'Income' ? 'Dochody' : 'Wydatki'}</TableCell>
+              <TableCell>{row.type === 'Income' ? 'Dochód' : 'Wydatek'}</TableCell>
               <TableCell>{row.category}</TableCell>
               <TableCell align="right">{`$${row.amount}`}</TableCell>
               <TableCell align='center'>
