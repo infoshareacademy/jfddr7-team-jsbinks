@@ -105,7 +105,7 @@ export const MainView: React.FC = () => {
   const renderCatergories = (type: string) => {
     const categories =  type === 'Income' ? incomeCategories : expenseCategories;
     return categories.map((category) =>
-        <MenuItem value={category.type}>{category.type}</MenuItem>     
+        <MenuItem value={category.name}>{category.name}</MenuItem>     
     )
   }
 
@@ -146,7 +146,7 @@ export const MainView: React.FC = () => {
         alignItems="flex-start"
       >
         <Grid item xs={3}>
-          <Chart categoryName='Income' operations={operation}/>
+          <Chart categoryName='Income' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories} />
         </Grid>
         <Grid item xs={6}>
           <Box
@@ -217,7 +217,7 @@ export const MainView: React.FC = () => {
           </Box>
         </Grid>
         <Grid item xs={3}>
-          <Chart categoryName='Expense' operations={operation}/>
+          <Chart categoryName='Expense' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories}/>
         </Grid>
       </Grid>
     </Box>

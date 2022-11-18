@@ -31,9 +31,9 @@ type Title = {
 };
 
 export type Category = {
-  type: string;
-  amount: number;
-  color: string;
+  name: string;
+  value: number;
+  fill: string;
 };
 
 interface ChartData {
