@@ -32,7 +32,12 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
   const categoryValue = filterdOperations.reduce((prev, curr) => prev + curr.amount, 0)
 
   return (
-    <Box>
+    <Box
+    sx={categoryName === 'Income'
+        ? { backgroundColor: 'rgba(16, 172, 110, 0.1)'} 
+        : { backgroundColor: 'rgba(229, 124, 88, 0.1)'}
+  }
+    >
       <Box>
         <Card>
           <CardContent>
