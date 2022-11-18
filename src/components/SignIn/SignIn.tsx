@@ -17,6 +17,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../theme/theme'
+import background from '../../images/background.jpg'
 
 
 function Copyright(props: any) {
@@ -57,15 +58,23 @@ export function SignIn() {
     }
 
   return (
+    <Box
+    sx={{
+      height: '100vh',
+      backgroundImage: `url(${background})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth='xs' sx={{
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-          }}>
+      <Container component="main" maxWidth='xs'
+      sx={{
+        backgroundColor: 'rgba(235, 235, 235, 0.9)',
+        padding: 4
+      }}>
         <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -131,5 +140,6 @@ export function SignIn() {
           </Box>
       </Container>
     </ThemeProvider>
+    </Box>
   );
 }
