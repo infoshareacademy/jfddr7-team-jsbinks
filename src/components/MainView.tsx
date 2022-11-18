@@ -15,7 +15,7 @@ import {Container, Typography, Select, FormControl, InputLabel, MenuItem, Outlin
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { grey } from "@mui/material/colors"
+import { grey, red, green } from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
 import { ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
@@ -131,7 +131,7 @@ export const MainView: React.FC = () => {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Powodzenia w nierównej walce z inflacją {username}!
+            Cześć {username}!
           </Typography>
           <IconButton color="inherit" onClick={onLogout}>
                 Wyloguj
@@ -156,7 +156,7 @@ export const MainView: React.FC = () => {
               <form className={classes.formStyle} onSubmit={handleSubmit}>
               <Typography variant="h3">Budżetówka</Typography>
               <Typography variant="h4">Twoje Saldo</Typography>
-              {balance !== null && <Typography variant="h6">${balance}</Typography>}
+              {balance !== null && <Typography variant="h6" color={balance > 0 ? green[500] : red[500]}>${balance}</Typography>}
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
                   <Select
