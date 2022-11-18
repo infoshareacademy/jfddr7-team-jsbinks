@@ -1,10 +1,13 @@
 import * as React from 'react';
 import {useContext} from 'react';
-import {Table, TableBody, TableCell, TableHead, TableRow, Typography, Button} from '@mui/material'
+import {Table, TableBody, TableCell, TableHead, TableRow, Typography, Button, Grid} from '@mui/material'
 import { doc, deleteDoc } from "firebase/firestore";
 import { firebaseDb } from '../index';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { StoreContext } from '../StoreProvider';
+import { red, green } from "@mui/material/colors"
 
 
  const HistoryList = () => {
@@ -22,31 +25,37 @@ import { StoreContext } from '../StoreProvider';
 
 
   return (
-    <React.Fragment>
+    <Grid item xs={11} alignItems='center' justifyContent='center'>
       <Typography>Ostatnie operacje</Typography>
-      <Table size="small">
+      <Table size="small" stickyHeader>
         <TableHead>
           <TableRow>
+            <TableCell></TableCell>
             <TableCell>Data</TableCell>
             <TableCell>Typ</TableCell>
             <TableCell>Kategoria</TableCell>
             <TableCell align="right">Wartość</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {operation.map((row, index) => (
             <TableRow key={index}>
+              <TableCell>{row.type === 'Income' ? <AddIcon sx={{color: green[500]}}/> : <RemoveIcon sx={{color: red[500]}}/>}</TableCell>
               <TableCell>{row.date}</TableCell>
-              <TableCell>{row.type}</TableCell>
+              <TableCell>{row.type === 'Income' ? 'Dochody' : 'Wydatki'}</TableCell>
               <TableCell>{row.category}</TableCell>
               <TableCell align="right">{`$${row.amount}`}</TableCell>
-              <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleteItem(row.id)}>
-              </Button>
+              <TableCell align='center'>
+                <Button variant="outlined" onClick={() => deleteItem(row.id)}><DeleteIcon />
+                </Button>
+              </TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </React.Fragment>
+    </Grid>
   );
 }
 

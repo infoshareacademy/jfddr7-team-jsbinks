@@ -7,7 +7,6 @@ import {doc, setDoc} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 import { Chart } from './Charts/Chart';
 import { Category } from '../types';
-// import { ListProps } from './HistoryList';
 import { StoreContext } from '../StoreProvider';
 import { OperationObj } from '../StoreProvider';
 //materail UI
@@ -28,7 +27,6 @@ const useStyles = makeStyles({
     borderRadius: 10,
     padding: 20,
     backgroundColor: grey[200],
-    marginTop: 30,
     },
 
   formStyle: {
@@ -105,7 +103,7 @@ export const MainView: React.FC = () => {
   const renderCatergories = (type: string) => {
     const categories =  type === 'Income' ? incomeCategories : expenseCategories;
     return categories.map((category) =>
-        <MenuItem value={category.name}>{category.name}</MenuItem>     
+        <MenuItem value={category.name} key={category.name}>{category.name}</MenuItem>     
     )
   }
 
