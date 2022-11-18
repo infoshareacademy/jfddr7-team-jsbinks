@@ -28,7 +28,7 @@ import { StoreContext } from '../StoreProvider';
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
-            <TableCell>Income/Expense</TableCell>
+            <TableCell>Type</TableCell>
             <TableCell>Category</TableCell>
             <TableCell align="right">Amount</TableCell>
           </TableRow>
@@ -41,7 +41,6 @@ import { StoreContext } from '../StoreProvider';
               <TableCell>{row.category}</TableCell>
               <TableCell align="right">{`$${row.amount}`}</TableCell>
               <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleteItem(row.id)}>
-                Delete
               </Button>
             </TableRow>
           ))}
