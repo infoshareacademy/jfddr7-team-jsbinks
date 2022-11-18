@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
   interface Theme {
@@ -35,10 +35,10 @@ export const theme = createTheme(
     },
     palette: {
       primary: {
-        main: '#4caf50',
+        main: '#1b5e20',
       },
       secondary: {
-        main: '#ffca28',
+        main: '#1b5e20',
       },
       neutral: {
         main: '#64748B',

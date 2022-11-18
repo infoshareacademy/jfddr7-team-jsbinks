@@ -1,18 +1,16 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
-import React, { PureComponent, useContext } from "react";
-import { PieChart, Pie, Legend } from "recharts";
-import { StoreProvider } from "../../StoreProvider";
+import { red, green } from "@mui/material/colors"
+import { PieChart, Pie, Legend, ResponsiveContainer, LabelList } from "recharts";
 import { OperationObj } from "../../StoreProvider";
 import { Category } from "../../types";
 
 const renderColorfulLegendText = (value: string, entry: any) => {
     return (
-      <span style={{ color: "#596579", fontWeight: 500, padding: "10px" }}>
+      <span style={{ color: "#596579", fontWeight: 500, padding: "8px" }}>
         {value}
       </span>
     );
   };
-
 
 type CategoryName = "Income" | "Expense"
 
@@ -21,18 +19,12 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
   operations: OperationObj[],
   Incomes: Category[],
   Expenses: Category[],
-
 }) => {
 
   const categoryColors =  categoryName === 'Income' ? Incomes : Expenses;
   const filterdOperations = operations.filter((operation) => operation.type === categoryName);
 
   const data = filterdOperations.map((operation) => ({
-
-    // categoryColors.filter((categoryColor) => {
-
-    // })
-
     name: operation.category,
     value: operation.amount, 
     fill: categoryColors.find((category) => operation.category === category.name)?.fill,
@@ -44,33 +36,37 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
       <Box>
         <Card>
           <CardContent>
-            <Typography variant='h6'>{categoryName === 'Income' ? 'Dochody' : 'Wydatki'}</Typography>
-            <Typography>{categoryValue}</Typography>
+            <Typography variant='h4' align="center">{categoryName === 'Income' ? 'Dochody' : 'Wydatki'}</Typography>
+            <Typography variant='h4' align="center" color={categoryName === 'Income' ? green[500] : red[500]}>${categoryValue}</Typography>
           </CardContent>
         </Card>
       </Box>
       <Box>
-        <PieChart width={250} height={650}>
-          <Legend
-            height={36}
-            iconType="circle"
-            layout="vertical"
-            verticalAlign="middle"
-            iconSize={10}
-            formatter={renderColorfulLegendText}
-          />
-          <Pie
-            data={data}
-            cx={120}
-            cy={200}
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            paddingAngle={0}
-            dataKey="value"
-          >
-          </Pie>
-        </PieChart>
+        <ResponsiveContainer width='100%' height={320}>
+          <PieChart >
+            <Legend
+              height={16}
+              iconType="circle"
+              layout="vertical"
+              verticalAlign="bottom"
+              iconSize={10}
+              formatter={renderColorfulLegendText}
+            />
+            <Pie
+              data={data}
+              cx={120}
+              cy={200}
+              innerRadius={30}
+              outerRadius={70}
+              fill="#8884d8"
+              paddingAngle={0}
+              dataKey="value"
+              label
+            >
+              {/* <LabelList dataKey='name'/> */}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
       </Box>
     </Box>    
   );

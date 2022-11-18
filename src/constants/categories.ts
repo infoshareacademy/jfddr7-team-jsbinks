@@ -26,29 +26,29 @@ const expenseColors: string[] = [
 ];
 
 export const Incomes: Category[] = [
-  { name: "Business", value: 0, fill: incomeColors[0] },
-  { name: "Investments", value: 0, fill: incomeColors[1] },
-  { name: "Extra income", value: 0, fill: incomeColors[2] },
-  { name: "Deposits", value: 0, fill: incomeColors[3] },
-  { name: "Lottery", value: 0, fill: incomeColors[4] },
-  { name: "Gifts", value: 0, fill: incomeColors[5] },
-  { name: "Salary", value: 0, fill: incomeColors[6] },
-  { name: "Savings", value: 0, fill: incomeColors[7] },
-  { name: "Rental income", value: 0, fill: incomeColors[8] },
+  { name: "Biznes", value: 0, fill: incomeColors[0] },
+  { name: "Inwestycje", value: 0, fill: incomeColors[1] },
+  { name: "Dodatkowy dochód", value: 0, fill: incomeColors[2] },
+  { name: "Depozyty", value: 0, fill: incomeColors[3] },
+  { name: "Loteria", value: 0, fill: incomeColors[4] },
+  { name: "Prezenty", value: 0, fill: incomeColors[5] },
+  { name: "Pensja", value: 0, fill: incomeColors[6] },
+  { name: "Oszczędności", value: 0, fill: incomeColors[7] },
+  { name: "Dochód z najmu", value: 0, fill: incomeColors[8] },
 ];
 
 export const Expenses: Category[] = [
-  { name: "Bills", value: 0, fill: expenseColors[0] },
-  { name: "Car", value: 0, fill: expenseColors[1] },
-  { name: "Clothes", value: 0, fill: expenseColors[2] },
-  { name: "Travel", value: 0, fill: expenseColors[3] },
-  { name: "Food", value: 0, fill: expenseColors[4] },
-  { name: "Shopping", value: 0, fill: expenseColors[5] },
-  { name: "House", value: 0, fill: expenseColors[6] },
-  { name: "Entertainment", value: 0, fill: expenseColors[7] },
-  { name: "Phone", value: 0, fill: expenseColors[8] },
-  { name: "Pets", value: 0, fill: expenseColors[9] },
-  { name: "Other", value: 0, fill: expenseColors[10] },
+  { name: "Rachunki", value: 0, fill: expenseColors[0] },
+  { name: "Samochód", value: 0, fill: expenseColors[1] },
+  { name: "Ubrania", value: 0, fill: expenseColors[2] },
+  { name: "Podróże", value: 0, fill: expenseColors[3] },
+  { name: "Jedzenie", value: 0, fill: expenseColors[4] },
+  { name: "Zakupy", value: 0, fill: expenseColors[5] },
+  { name: "Dom", value: 0, fill: expenseColors[6] },
+  { name: "Rozrywka", value: 0, fill: expenseColors[7] },
+  { name: "Telefon", value: 0, fill: expenseColors[8] },
+  { name: "Zwierzaki", value: 0, fill: expenseColors[9] },
+  { name: "Inne", value: 0, fill: expenseColors[10] },
 ];
 
 // export const resetCategories: () => void = () => {

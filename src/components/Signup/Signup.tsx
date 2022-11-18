@@ -3,25 +3,18 @@ import { Link as RLink, useNavigate } from "react-router-dom"
 import {firebaseAuth} from "../../index"
 import {useState} from "react"
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { Container, Avatar, Button, CssBaseline, TextField, Link, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../theme/theme'
+import background from '../../images/background.jpg'
 
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://github.com/infoshareacademy/jfddr7-team-jsbinks">
         JS-Binks Sp z o.o.
       </Link>{' '}
       {new Date().getFullYear()}
@@ -69,79 +62,87 @@ export const SignUp = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      {/* <Box></Box> */}
-      <Container component="main" maxWidth="xs" sx={{
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-          }}>
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Proszę zarejestruj się do Budżetówki
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 1 }}>
-                <TextField
-                  required
-                  margin="normal"
-                  fullWidth
-                  id="email"
-                  label="Adres E-mail"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={e => setEmail(e.target.value)}
-                />
-                <TextField
-                  required
-                  margin="normal"
-                  fullWidth
-                  name="password"
-                  label="Hasło"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={e => setPassword(e.target.value)}
-                />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Rejestruję się
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <RLink to='/signin'>
-                    <Button>
-                      Masz już konto? Zaloguj się tutaj
-                    </Button>
-                </RLink>
-              </Grid>
-            </Grid>
-            <Grid container sx={{
+    <Box
+      sx={{
+        height: '100vh',
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs" sx={{
+              backgroundColor: 'rgba(239, 239, 239, 0.9)',
+              padding: 4
+            }}>
+          <CssBaseline />
+          <Box
+            sx={{
               marginTop: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-            }}>
-                {error && <Typography variant='h6' color='error'>{error}</Typography>}
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Proszę zarejestruj się do Budżetówki
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 1 }}>
+                  <TextField
+                    required
+                    margin="normal"
+                    fullWidth
+                    id="email"
+                    label="Adres E-mail"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={e => setEmail(e.target.value)}
+                  />
+                  <TextField
+                    required
+                    margin="normal"
+                    fullWidth
+                    name="password"
+                    label="Hasło"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    onChange={e => setPassword(e.target.value)}
+                  />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Rejestruję się
+              </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <RLink to='/signin'>
+                      <Button>
+                        Masz już konto? Zaloguj się tutaj
+                      </Button>
+                  </RLink>
+                </Grid>
               </Grid>
-            <Copyright sx={{ mt: 5 }} />
+              <Grid container sx={{
+                marginTop: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}>
+                  {error && <Typography variant='h6' color='error'>{error}</Typography>}
+                </Grid>
+              <Copyright sx={{ mt: 5 }} />
+            </Box>
           </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
+    </Box>
   );
 }
