@@ -16,57 +16,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { grey } from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import HistoryList from './HistoryList';
-
-declare module '@mui/material/styles' {
-  interface Theme {
-    status: {
-      danger: React.CSSProperties['color'];
-    };
-  }
-
-  interface Palette {
-    neutral: Palette['primary'];
-  }
-  interface PaletteOptions {
-    neutral: PaletteOptions['primary'];
-  }
-
-  interface PaletteColor {
-    darker?: string;
-  }
-  interface SimplePaletteColorOptions {
-    darker?: string;
-  }
-  interface ThemeOptions {
-    status: {
-      danger: React.CSSProperties['color'];
-    };
-  }
-}
-
-
-const theme = createTheme(
-  {
-    status: {
-      danger: '#e53e3e',
-    },
-    palette: {
-      primary: {
-        main: '#4caf50',
-      },
-      secondary: {
-        main: '#ffca28',
-      },
-      neutral: {
-        main: '#64748B',
-        contrastText: '#fff',
-      },
-    },
-  }
-);
+import { theme } from '../theme/theme'
 
 const useStyles = makeStyles({
   container: {
@@ -116,33 +69,30 @@ export const MainView: React.FC = () => {
   }, [operation])
   
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>) => {
-
     e.preventDefault();
     console.log( incomeValue ,category, amount, entryDate);
-  //   const inputList: ListProps = {date: entryDate ? dayjs(entryDate.toString()).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'), incomeValue, category, amount}
-  //   setFullList([...fullList, inputList])
   } 
 
 
-    const addOperation = async (): Promise<void> => {
-      console.log(entryDate);
-      const OperationObject: OperationObj = {
-        id: uuid(),
-        amount: Number(amount),
-        category: category,
-        type: incomeValue,
-        date: entryDate ? dayjs(entryDate.toString()).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'), 
-      }
-      try {
-        await setDoc(doc(firebaseDb, 'operations', OperationObject.id), {
-            name: OperationObject,
-            userEmail: username,
-        });
-        const updatedOperations = [...operation, OperationObject];
-        setOperation(updatedOperations);
-      } catch (error) {
-        console.log(error);
-      }
+  const addOperation = async (): Promise<void> => {
+    console.log(entryDate);
+    const OperationObject: OperationObj = {
+      id: uuid(),
+      amount: Number(amount),
+      category: category,
+      type: incomeValue,
+      date: entryDate ? dayjs(entryDate.toString()).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'), 
+    }
+    try {
+      await setDoc(doc(firebaseDb, 'operations', OperationObject.id), {
+          name: OperationObject,
+          userEmail: username,
+      });
+      const updatedOperations = [...operation, OperationObject];
+      setOperation(updatedOperations);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const onLogout = async (): Promise<void> => {
@@ -180,78 +130,92 @@ export const MainView: React.FC = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Box
-        component="main" 
+      <Grid 
+        container 
+        spacing={1} 
+        direction="row"
+        justifyContent="space-around"
+        alignItems="flex-start"
       >
-        <Container maxWidth="sm" color="primary" className={classes.container}>
-          <form className={classes.formStyle} onSubmit={handleSubmit}>
-          <Typography variant="h3">Budżetówka</Typography>
-          <Typography variant="h4">Twoje Saldo</Typography>
-          {balance !== null && <Typography variant="h6">${balance}</Typography>}
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
-              <Select
-                onChange={(event) => setIncomeValue(event.target.value)}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={incomeValue}
-                label="Income"
-              >
-                <MenuItem value='Income'>Wpływy</MenuItem>
-                <MenuItem value='Expense'>Wydatki</MenuItem>
-              </Select>
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Kategoria</InputLabel>
-              <Select
-                onChange={(event) => setCategory(event.target.value)}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={category}
-                label="Category"
-              >
-                <MenuItem value='Business'>Biznes</MenuItem>
-                <MenuItem value='Shopping'>Zakupy</MenuItem>
-                <MenuItem value='Investment'>Inwestycje</MenuItem>
-                <MenuItem value='Health'>Zdrowie</MenuItem>
-              </Select>
-          </FormControl>
-          <FormControl fullWidth>
-              <InputLabel htmlFor="outlined-adornment-amount">Wartość</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                value={amount}
-                onChange={(event) => setAmount(event.target.value)}
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                label="Amount"
-                required
-              />
-            </FormControl>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-              label="Data"
-              inputFormat="DD/MM/YYYY"
-              value={entryDate}
-              onChange={(newValue) => {
-                setEntryDate(newValue);
-              }}
-              renderInput={(params) => <TextField fullWidth {...params} />}
-            />
-            </LocalizationProvider>
-            <Button type='submit' variant="contained" size="large" onClick={addOperation}>
-              Dodaj operację
-            </Button>
-            </form>
-        </Container>
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            <HistoryList />
-          </Paper>
+        <Grid item xs={3}>
+          <Chart categoryName='Income' operations={operation}/>
         </Grid>
-      </Box>
+        <Grid item xs={6}>
+          <Box
+          component="main" 
+          >
+            <Container maxWidth="sm" color="primary" className={classes.container}>
+              <form className={classes.formStyle} onSubmit={handleSubmit}>
+              <Typography variant="h3">Budżetówka</Typography>
+              <Typography variant="h4">Twoje Saldo</Typography>
+              {balance !== null && <Typography variant="h6">${balance}</Typography>}
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
+                  <Select
+                    onChange={(event) => setIncomeValue(event.target.value)}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={incomeValue}
+                    label="Income"
+                  >
+                    <MenuItem value='Income'>Wpływy</MenuItem>
+                    <MenuItem value='Expense'>Wydatki</MenuItem>
+                  </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Kategoria</InputLabel>
+                  <Select
+                    onChange={(event) => setCategory(event.target.value)}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={category}
+                    label="Category"
+                  >
+                    <MenuItem value='Business'>Biznes</MenuItem>
+                    <MenuItem value='Shopping'>Zakupy</MenuItem>
+                    <MenuItem value='Investment'>Inwestycje</MenuItem>
+                    <MenuItem value='Health'>Zdrowie</MenuItem>
+                  </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                  <InputLabel htmlFor="outlined-adornment-amount">Wartość</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-amount"
+                    value={amount}
+                    onChange={(event) => setAmount(event.target.value)}
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    label="Amount"
+                    required
+                  />
+                </FormControl>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DesktopDatePicker
+                  label="Data"
+                  inputFormat="DD/MM/YYYY"
+                  value={entryDate}
+                  onChange={(newValue) => {
+                    setEntryDate(newValue);
+                  }}
+                  renderInput={(params) => <TextField fullWidth {...params} />}
+                />
+                </LocalizationProvider>
+                <Button type='submit' variant="contained" size="large" onClick={addOperation}>
+                  Dodaj operację
+                </Button>
+                </form>
+            </Container>
+            <Grid item xs={12}>
+              <Paper sx={{ p: 1, display: 'flex', flexDirection: 'column' }}>
+                <HistoryList />
+              </Paper>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={3}>
+          <Chart categoryName='Expense' operations={operation}/>
+        </Grid>
+      </Grid>
     </Box>
-    <Chart categoryName='Income' operations={operation}/>
-    <Chart categoryName='Expense' operations={operation}/>
     </ThemeProvider>
   )
 }

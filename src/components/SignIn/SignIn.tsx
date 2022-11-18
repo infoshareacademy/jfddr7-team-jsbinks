@@ -16,52 +16,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../theme/theme'
 
-declare module '@mui/material/styles' {
-  interface Theme {
-    status: {
-      danger: React.CSSProperties['color'];
-    };
-  }
-  interface Palette {
-    neutral: Palette['primary'];
-  }
-  interface PaletteOptions {
-    neutral: PaletteOptions['primary'],
-  }
-
-  interface PaletteColor {
-    darker?: string;
-  }
-  interface SimplePaletteColorOptions {
-    darker?: string;
-  }
-  interface ThemeOptions {
-    status: {
-      danger: React.CSSProperties['color'];
-    };
-  }
-}
-
-
-const theme = createTheme(
-  {
-    status: {
-      danger: '#e53e3e',
-    },
-    palette: {
-      primary: {
-        main: '#4caf50',
-      },
-      secondary: {
-        main: '#ffca28',
-      },
-      neutral: {
-        main: '#64748B',
-        contrastText: '#fff',
-      },
-    },
-  });
 
 function Copyright(props: any) {
   return (
@@ -102,7 +58,10 @@ export function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth='xs'>
+      <Container component="main" maxWidth='xs' sx={{
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          }}>
         <CssBaseline />
           <Box
             sx={{

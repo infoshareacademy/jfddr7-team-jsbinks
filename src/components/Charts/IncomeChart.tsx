@@ -29,7 +29,7 @@ export const Chart = ({ operations, categoryName }: {categoryName: CategoryName,
 
 
       return (
-        <PieChart width={800} height={400}>
+        <PieChart width={250} height={650}>
           <Legend
             height={36}
             iconType="circle"

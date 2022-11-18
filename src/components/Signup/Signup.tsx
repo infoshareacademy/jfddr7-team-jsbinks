@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../theme/theme'
 
 
 function Copyright(props: any) {
@@ -28,54 +29,6 @@ function Copyright(props: any) {
     </Typography>
   );
 }
-
-declare module '@mui/material/styles' {
-  interface Theme {
-    status: {
-      danger: React.CSSProperties['color'];
-    };
-  }
-
-  interface Palette {
-    neutral: Palette['primary'];
-  }
-  interface PaletteOptions {
-    neutral: PaletteOptions['primary'];
-  }
-
-  interface PaletteColor {
-    darker?: string;
-  }
-  interface SimplePaletteColorOptions {
-    darker?: string;
-  }
-  interface ThemeOptions {
-    status: {
-      danger: React.CSSProperties['color'];
-    };
-  }
-}
-
-
-const theme = createTheme(
-  {
-    status: {
-      danger: '#e53e3e',
-    },
-    palette: {
-      primary: {
-        main: '#4caf50',
-      },
-      secondary: {
-        main: '#ffca28',
-      },
-      neutral: {
-        main: '#64748B',
-        contrastText: '#fff',
-      },
-    },
-  }
-);
 
 export const SignUp = () => {
   const [email, setEmail] = useState("")
@@ -118,7 +71,10 @@ export const SignUp = () => {
   return (
     <ThemeProvider theme={theme}>
       {/* <Box></Box> */}
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          }}>
         <CssBaseline />
         <Box
           sx={{
@@ -134,11 +90,10 @@ export const SignUp = () => {
           <Typography component="h1" variant="h5">
             Proszę zarejestruj się do Budżetówki
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+          <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 1 }}>
                 <TextField
                   required
+                  margin="normal"
                   fullWidth
                   id="email"
                   label="Adres E-mail"
@@ -147,10 +102,9 @@ export const SignUp = () => {
                   autoFocus
                   onChange={e => setEmail(e.target.value)}
                 />
-              </Grid>
-              <Grid item xs={12}>
                 <TextField
                   required
+                  margin="normal"
                   fullWidth
                   name="password"
                   label="Hasło"
@@ -159,8 +113,6 @@ export const SignUp = () => {
                   autoComplete="new-password"
                   onChange={e => setPassword(e.target.value)}
                 />
-              </Grid>
-            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -186,9 +138,9 @@ export const SignUp = () => {
             }}>
                 {error && <Typography variant='h6' color='error'>{error}</Typography>}
               </Grid>
+            <Copyright sx={{ mt: 5 }} />
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
