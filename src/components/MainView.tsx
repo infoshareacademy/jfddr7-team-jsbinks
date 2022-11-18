@@ -32,7 +32,8 @@ export const MainView: React.FC = () => {
     <Box sx={{ display: 'flex' ,
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'}}>
+      alignItems: 'center',
+    }}>
       <AppBar position="sticky">
         <Toolbar
           sx={{
@@ -56,9 +57,13 @@ export const MainView: React.FC = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <Box sx={{
+        maxWidth: '1200px'
+      }}
+      >
       <Grid 
         container 
-        spacing={2} 
+        spacing={1} 
         direction="row"
         justifyContent="center"
         alignItems="flex-start"
@@ -67,19 +72,14 @@ export const MainView: React.FC = () => {
           <Chart categoryName='Income' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories} />
         </Grid>
         <Grid item xs={5} justifyContent='center'>
-          <Box
-          component="main" 
-          >
             <Form />
-            <Grid item>
-                <HistoryList />
-            </Grid>
-          </Box>
+            <HistoryList />
         </Grid>
         <Grid item xs={3}>
           <Chart categoryName='Expense' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories}/>
         </Grid>
       </Grid>
+      </Box>
     </Box>
     </ThemeProvider>
   )

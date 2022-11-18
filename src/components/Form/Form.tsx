@@ -1,25 +1,19 @@
-import React, {useState, useContext, useEffect} from 'react';
+import {useState, useContext, useEffect} from 'react';
 import dayjs, { Dayjs } from 'dayjs';
-import { firebaseAuth, firebaseDb  } from '../../index';
-import { signOut } from 'firebase/auth';
 import {doc, setDoc} from 'firebase/firestore';
+import { firebaseDb } from '../../index'
 import { v4 as uuid } from 'uuid';
-import { Chart } from '../Charts/Chart';
 import { Category } from '../../types';
 import { StoreContext } from '../../StoreProvider';
 import { OperationObj } from '../../StoreProvider';
 //materail UI
-import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Box, AppBar, Toolbar, IconButton, Avatar, Grid, Paper} from "@mui/material"
+import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Card, CardMedia, Box} from "@mui/material"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { grey, red, green } from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
-import { ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-
-import { theme } from '../../theme/theme'
-import logo from '../images/logo.png'
+import logo from '../../images/logo.png'
 
 const useStyles = makeStyles({
   container: {
@@ -29,7 +23,6 @@ const useStyles = makeStyles({
     backgroundColor: grey[100],
     marginBottom: 20
     },
-
   formStyle: {
     display: "flex",
     flexDirection: "column",
@@ -93,63 +86,89 @@ export const Form = () => {
 
   return (
     <Container maxWidth="sm" color="primary" className={classes.container}>
-              <form className={classes.formStyle} onSubmit={e => e.preventDefault()}>
-              <Typography variant="h5">Budżetówka</Typography>
-              <Typography variant="h4">Twoje Saldo</Typography>
-              {balance !== null && <Typography variant="h3" color={balance > 0 ? green[500] : red[500]}>${balance}</Typography>}
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
-                  <Select
-                    onChange={(event) => setIncomeValue(event.target.value)}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={incomeValue}
-                    label="Income"
-                  >
-                    <MenuItem value='Income'>Wpływy</MenuItem>
-                    <MenuItem value='Expense'>Wydatki</MenuItem>
-                  </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Kategoria</InputLabel>
-                  <Select
-                    onChange={(event) => setCategory(event.target.value)}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={category}
-                    label="Category"
-                  >
-                  {renderCatergories(incomeValue)}
-                  </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                  <InputLabel htmlFor="outlined-adornment-amount">Wartość</InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-amount"
-                    value={amount}
-                    onChange={(event) => setAmount(event.target.value)}
-                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                    label="Amount"
-                    required
-                  />
-                </FormControl>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DesktopDatePicker
-                  label="Data"
-                  inputFormat="DD/MM/YYYY"
-                  value={entryDate}
-                  onChange={(newValue) => {
-                    setEntryDate(newValue);
-                  }}
-                  renderInput={(params) => <TextField fullWidth {...params} />}
-                />
-                </LocalizationProvider>
-                <Button type='submit' variant="contained" size="large" onClick={addOperation}>
-                  Dodaj operację
-                </Button>
-                </form>
-            </Container>
-
+      <Card sx={{
+        padding: 1, 
+        marginBottom: 3,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "spread-around",
+        justifyContent: 'space-around',
+        gap: 1,
+      }}
+      >
+        <Box sx={{
+          height: 140,
+          width: '100%',
+          backgroundImage: `url(${logo})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          marginTop: -4
+        }}
+        ></Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}>
+          <Typography variant="h4" align='center'>Twoje Saldo</Typography>
+          {balance !== null && <Typography variant="h3" color={balance > 0 ? green[500] : red[500]}>${balance}</Typography>}
+        </Box>
+      </Card>
+      <form className={classes.formStyle} onSubmit={e => e.preventDefault()}>
+        <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
+          <Select
+            onChange={(event) => setIncomeValue(event.target.value)}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={incomeValue}
+            label="Income"
+          >
+            <MenuItem value='Income'>Wpływy</MenuItem>
+            <MenuItem value='Expense'>Wydatki</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Kategoria</InputLabel>
+            <Select
+              onChange={(event) => setCategory(event.target.value)}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={category}
+              label="Category"
+            >
+              {renderCatergories(incomeValue)}
+            </Select>
+        </FormControl>
+        <FormControl fullWidth>
+          <InputLabel htmlFor="outlined-adornment-amount">Wartość</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            label="Amount"
+            required
+          />
+        </FormControl>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DesktopDatePicker
+            label="Data"
+            inputFormat="DD/MM/YYYY"
+            value={entryDate}
+            onChange={(newValue) => {
+              setEntryDate(newValue);
+            }}
+            renderInput={(params) => <TextField fullWidth {...params} />}
+          />
+        </LocalizationProvider>
+        <Button type='submit' variant="contained" size="large" onClick={addOperation}>
+          Dodaj operację
+        </Button>
+      </form>
+    </Container>
   )
 }
 
