@@ -6,6 +6,7 @@ import { firebaseDb } from '../index';
 import {doc, setDoc} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 import { Chart } from './Charts/Chart';
+import { Category } from '../types';
 // import { ListProps } from './HistoryList';
 import { StoreContext } from '../StoreProvider';
 import { OperationObj } from '../StoreProvider';
@@ -43,7 +44,7 @@ export const MainView: React.FC = () => {
 
   const navigate = useNavigate()
   const classes = useStyles()
-  const { username, operation, setOperation } = useContext(StoreContext);
+  const { username, operation, setOperation, incomeCategories, expenseCategories} = useContext(StoreContext);
   
 
   const [entryDate, setEntryDate] = React.useState<Dayjs | null>(null);
@@ -99,6 +100,13 @@ export const MainView: React.FC = () => {
     await signOut(firebaseAuth);
     console.log('the user singed out')
     navigate('/signin');
+  }
+
+  const renderCatergories = (type: string) => {
+    const categories =  type === 'Income' ? incomeCategories : expenseCategories;
+    return categories.map((category) =>
+        <MenuItem value={category.type}>{category.type}</MenuItem>     
+    )
   }
 
   return (
@@ -171,10 +179,7 @@ export const MainView: React.FC = () => {
                     value={category}
                     label="Category"
                   >
-                    <MenuItem value='Business'>Biznes</MenuItem>
-                    <MenuItem value='Shopping'>Zakupy</MenuItem>
-                    <MenuItem value='Investment'>Inwestycje</MenuItem>
-                    <MenuItem value='Health'>Zdrowie</MenuItem>
+                  {renderCatergories(incomeValue)}
                   </Select>
               </FormControl>
               <FormControl fullWidth>

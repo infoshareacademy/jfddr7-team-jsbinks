@@ -25,7 +25,7 @@ const expenseColors: string[] = [
   "#f55b5f",
 ];
 
-export const incomeCategories: Category[] = [
+export const Incomes: Category[] = [
   { type: "Business", amount: 0, color: incomeColors[0] },
   { type: "Investments", amount: 0, color: incomeColors[1] },
   { type: "Extra income", amount: 0, color: incomeColors[2] },
@@ -37,7 +37,7 @@ export const incomeCategories: Category[] = [
   { type: "Rental income", amount: 0, color: incomeColors[8] },
 ];
 
-export const expenseCategories: Category[] = [
+export const Expenses: Category[] = [
   { type: "Bills", amount: 0, color: expenseColors[0] },
   { type: "Car", amount: 0, color: expenseColors[1] },
   { type: "Clothes", amount: 0, color: expenseColors[2] },
@@ -52,6 +52,6 @@ export const expenseCategories: Category[] = [
 ];
 
 export const resetCategories: () => void = () => {
-  incomeCategories.forEach((c) => (c.amount = 0));
-  expenseCategories.forEach((c) => (c.amount = 0));
+  Incomes.forEach((c) => (c.amount = 0));
+  Expenses.forEach((c) => (c.amount = 0));
 };

@@ -30,7 +30,7 @@ type Title = {
   title: string;
 };
 
-type Category = {
+export type Category = {
   type: string;
   amount: number;
   color: string;
