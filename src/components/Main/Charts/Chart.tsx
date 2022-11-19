@@ -24,12 +24,30 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
   const categoryColors =  categoryName === 'Income' ? Incomes : Expenses;
   const filterdOperations = operations.filter((operation) => operation.type === categoryName);
 
+
+  type Holder = {
+    name: number;
+  };
+
+  let holder = {} as Holder;
+
+  filterdOperations.forEach((obj) => {
+    if(holder.hasOwnProperty(obj.category)) {
+      holder[obj.category] = holder[obj.category] + obj.amount;
+    } else {
+      holder[obj.category] = obj.amount;
+    }
+  })
+
+  console.log(holder);
+
   const data = filterdOperations.map((operation) => ({
-    name: operation.category,
-    value: operation.amount, 
-    fill: categoryColors.find((category) => operation.category === category.name)?.fill,
+      name: operation.category,
+      value: operation.amount, 
+      fill: categoryColors.find((category) => operation.category === category.name)?.fill,
   }))
   const categoryValue = filterdOperations.reduce((prev, curr) => prev + curr.amount, 0)
+  console.log(filterdOperations);
 
   return (
     <Box

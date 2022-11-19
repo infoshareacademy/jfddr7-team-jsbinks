@@ -1,13 +1,5 @@
 import React from "react";
 
-interface ITransaction {
-  id: string;
-  amount: number;
-  category: string;
-  type: string;
-  date: string;
-}
-
 interface IFormData {
   id: string;
   amount: number;
@@ -18,35 +10,8 @@ interface IFormData {
 
 type TransactionType = "Income" | "Expense";
 
-type BudgetAction =
-  | { type: "ADD"; payload: ITransaction }
-  | { type: "DELETE"; payload: ITransaction };
-
-interface IProviderProps {
-  children: React.ReactNode;
-}
-
-type Title = {
-  title: string;
-};
-
 export type Category = {
   name: string;
   value: number;
   fill: string;
-};
-
-interface ChartData {
-  datasets: {
-    data: number[];
-    backgroundColor: string[];
-  }[];
-  labels: string[];
-}
-
-type Styles = {
-  order: string;
-  borderColor: string;
-  titleColor: string;
-  totalColor: string;
 };
