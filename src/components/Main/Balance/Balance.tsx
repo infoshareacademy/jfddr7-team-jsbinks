@@ -8,7 +8,7 @@ import logo from '../../../images/logo.png'
 
 
 export const Balance = () => {
-  const { username, operation, setOperation, incomeCategories, expenseCategories} = useContext(StoreContext);
+  const { operation } = useContext(StoreContext);
   const [balance, setBalance] = useState<number | null>(null);
 
   useEffect(() => {
@@ -30,21 +30,23 @@ export const Balance = () => {
   return (
     <Card sx={{
       padding: 1, 
-      marginBottom: 3,
+      marginBottom: 2,
+      // height: 155,
       display: "flex",
       flexDirection: "row",
-      alignItems: "spread-around",
-      justifyContent: 'space-around',
-      gap: 1,
+      alignContent: "center",
+      justifyContent: 'center'
     }}
     >
       <Box sx={{
-        height: 140,
-        width: '100%',
+        height: 150,
+        width: '70%',
         backgroundImage: `url(${logo})`,
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat',
-        marginTop: -4
+        backgroundPosition: 'center',
+        padding: 1
+        // marginTop: -4
       }}
       ></Box>
       <Box sx={{
@@ -53,6 +55,7 @@ export const Balance = () => {
         alignItems: 'center',
         justifyContent: 'center',
         flexWrap: 'wrap',
+        padding: 1
       }}>
         <Typography variant="h4" align='center'>Twoje Saldo</Typography>
         {balance !== null && <Typography variant="h3" color={balance > 0 ? green[500] : red[500]}>${balance}</Typography>}

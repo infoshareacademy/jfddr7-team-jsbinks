@@ -6,22 +6,9 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Container, Avatar, Button, CssBaseline, TextField, Link, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '../../theme/theme'
-import background from '../../images/background.jpg'
-
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/infoshareacademy/jfddr7-team-jsbinks">
-        JS-Binks Sp z o.o.
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { theme } from '../../theme/theme';
+import { Copyright } from '../Copyright';
+import background from '../../images/background.jpg';
 
 export function SignIn() {
   const [email, setEmail] = useState("")
@@ -128,7 +115,7 @@ export function SignIn() {
             }}>
                 {error && <Typography variant='h6' color='error'>{error}</Typography>}
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Copyright color='primary' sx={{ mt: 5 }} />
             </Box>
           </Box>
       </Container>

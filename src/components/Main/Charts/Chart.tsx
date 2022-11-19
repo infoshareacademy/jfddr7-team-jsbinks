@@ -34,7 +34,7 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
   return (
     <Box
     sx={categoryName === 'Income'
-        ? { backgroundColor: 'rgba(16, 172, 110, 0.1)',padding: 1.5, borderRadius: 2} 
+        ? { backgroundColor: 'rgba(27, 94, 32, 0.1)',padding: 1.5, borderRadius: 2} 
         : { backgroundColor: 'rgba(229, 124, 88, 0.1)', padding: 1.5, borderRadius: 2}
   }
     >
