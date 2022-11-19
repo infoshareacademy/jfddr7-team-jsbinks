@@ -34,8 +34,8 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
   return (
     <Box
     sx={categoryName === 'Income'
-        ? { backgroundColor: 'rgba(16, 172, 110, 0.1)'} 
-        : { backgroundColor: 'rgba(229, 124, 88, 0.1)'}
+        ? { backgroundColor: 'rgba(16, 172, 110, 0.1)',padding: 1.5, borderRadius: 2} 
+        : { backgroundColor: 'rgba(229, 124, 88, 0.1)', padding: 1.5, borderRadius: 2}
   }
     >
       <Box>
@@ -49,7 +49,7 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
       <Box sx={{
         paddingBottom: 2
       }}>
-        <ResponsiveContainer width='100%' minWidth={200} height={300}>
+        <ResponsiveContainer width='100%' minWidth={150} height={280}>
           <PieChart >
             <Legend
               height={0}
