@@ -1,19 +1,14 @@
 import React, {useContext} from 'react';
-
-import { firebaseAuth } from '../index';
+import { firebaseAuth } from '../../index';
 import { signOut } from 'firebase/auth';
 import { Chart } from './Charts/Chart';
-
-import { StoreContext } from '../StoreProvider';
-
+import { StoreContext } from '../../StoreProvider';
 //materail UI
 import {Typography, Box, AppBar, Toolbar, IconButton, Avatar, Grid} from "@mui/material"
-
 import { ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import HistoryList from './HistoryList';
-import { theme } from '../theme/theme'
-import logo from '../images/logo.png'
+import HistoryList from './HistoryList/HistoryList';
+import { theme } from '../../theme/theme'
 import { Form } from './Form/Form';
 
 export const MainView: React.FC = () => {
@@ -68,14 +63,14 @@ export const MainView: React.FC = () => {
         justifyContent="center"
         alignItems="flex-start"
       >
-        <Grid item xs={3}>
+        <Grid item xs={6} sm={3}>
           <Chart categoryName='Income' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories} />
         </Grid>
-        <Grid item xs={5} justifyContent='center'>
+        <Grid item xs={12} sm={5} justifyContent='center' alignItems='center'>
             <Form />
             <HistoryList />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} sm={3}>
           <Chart categoryName='Expense' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories}/>
         </Grid>
       </Grid>
