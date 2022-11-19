@@ -1,8 +1,8 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import { red, green } from "@mui/material/colors"
-import { PieChart, Pie, Legend, ResponsiveContainer, LabelList } from "recharts";
-import { OperationObj } from "../../StoreProvider";
-import { Category } from "../../types";
+import { PieChart, Pie, Legend, ResponsiveContainer } from "recharts";
+import { OperationObj } from "../../../StoreProvider";
+import { Category } from "../../../types";
 
 const renderColorfulLegendText = (value: string, entry: any) => {
     return (
@@ -70,7 +70,6 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
               dataKey="value"
               label
             >
-              {/* <LabelList dataKey='name'/> */}
             </Pie>
           </PieChart>
         </ResponsiveContainer>

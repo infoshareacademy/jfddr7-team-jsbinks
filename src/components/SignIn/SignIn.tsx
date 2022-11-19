@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormEvent } from 'react';
 import { Link as RLink, useNavigate } from "react-router-dom";
 import {firebaseAuth} from "../../index"
 import {useState} from "react"

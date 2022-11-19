@@ -1,19 +1,14 @@
 import React, {useContext} from 'react';
-
-import { firebaseAuth } from '../index';
+import { firebaseAuth } from '../../index';
 import { signOut } from 'firebase/auth';
 import { Chart } from './Charts/Chart';
-
-import { StoreContext } from '../StoreProvider';
-
+import { StoreContext } from '../../StoreProvider';
 //materail UI
 import {Typography, Box, AppBar, Toolbar, IconButton, Avatar, Grid} from "@mui/material"
-
 import { ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import HistoryList from './HistoryList';
-import { theme } from '../theme/theme'
-import logo from '../images/logo.png'
+import HistoryList from './HistoryList/HistoryList';
+import { theme } from '../../theme/theme'
 import { Form } from './Form/Form';
 
 export const MainView: React.FC = () => {

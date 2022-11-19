@@ -3,7 +3,7 @@ import './App.css';
 import { SignUp } from './components/Signup/Signup';
 import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { SignIn } from './components/SignIn/SignIn';
-import { MainView } from './components/MainView';
+import { MainView } from './components/Main/MainView';
 import NotFound from './components/NotFound';
 import {query, where, getDocs, collection} from 'firebase/firestore';
 import { firebaseAuth, firebaseDb } from './index';

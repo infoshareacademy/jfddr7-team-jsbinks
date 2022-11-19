@@ -1,19 +1,20 @@
 import {useState, useContext, useEffect} from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import {doc, setDoc} from 'firebase/firestore';
-import { firebaseDb } from '../../index'
+import { firebaseDb } from '../../../index'
 import { v4 as uuid } from 'uuid';
-import { Category } from '../../types';
-import { StoreContext } from '../../StoreProvider';
-import { OperationObj } from '../../StoreProvider';
+import { Category } from '../../../types';
+import { StoreContext } from '../../../StoreProvider';
+import { OperationObj } from '../../../StoreProvider';
 //materail UI
-import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Card, CardMedia, Box} from "@mui/material"
+import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Card, Box} from "@mui/material"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { grey, red, green } from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
-import logo from '../../images/logo.png'
+import logo from '../../../images/logo.png'
+import { Balance } from '../Balance/Balance';
 
 const useStyles = makeStyles({
   container: {
@@ -39,22 +40,6 @@ export const Form = () => {
   const [incomeValue, setIncomeValue] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState<string>('');
-  const [balance, setBalance] = useState<number | null>(null);
-
-  useEffect(() => {
-    const newBalance = operation.reduce((prev, curr) => {
-      let result = prev;
-
-      if (curr.type === 'Income') {
-        result = result + Number(curr.amount);
-      } else if (curr.type === 'Expense') {
-        result = result - Number(curr.amount);
-      }
-
-      return result
-    }, 0)
-    setBalance(newBalance)
-  }, [operation])
 
   const addOperation = async (): Promise<void> => {
     console.log(entryDate);
@@ -86,36 +71,7 @@ export const Form = () => {
 
   return (
     <Container maxWidth="sm" color="primary" className={classes.container}>
-      <Card sx={{
-        padding: 1, 
-        marginBottom: 3,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "spread-around",
-        justifyContent: 'space-around',
-        gap: 1,
-      }}
-      >
-        <Box sx={{
-          height: 140,
-          width: '100%',
-          backgroundImage: `url(${logo})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          marginTop: -4
-        }}
-        ></Box>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-        }}>
-          <Typography variant="h4" align='center'>Twoje Saldo</Typography>
-          {balance !== null && <Typography variant="h3" color={balance > 0 ? green[500] : red[500]}>${balance}</Typography>}
-        </Box>
-      </Card>
+      <Balance />
       <form className={classes.formStyle} onSubmit={e => e.preventDefault()}>
         <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>

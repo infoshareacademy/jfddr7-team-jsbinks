@@ -2,11 +2,11 @@ import * as React from 'react';
 import {useContext} from 'react';
 import {Table, TableBody, TableCell, TableHead, TableRow, Typography, Button, Grid} from '@mui/material'
 import { doc, deleteDoc } from "firebase/firestore";
-import { firebaseDb } from '../index';
+import { firebaseDb } from '../../../index';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { StoreContext } from '../StoreProvider';
+import { StoreContext } from '../../../StoreProvider';
 import { red, green } from "@mui/material/colors"
 
 
