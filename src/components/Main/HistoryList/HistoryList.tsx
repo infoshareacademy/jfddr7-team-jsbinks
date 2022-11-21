@@ -1,4 +1,6 @@
 import * as React from 'react';
+import useSound from 'use-sound';
+import trashSound from '../../Sound/trashSound.mp3';
 import {useState, useContext, useEffect} from 'react';
 // import SearchFilter from 'react-filter-search'
 import {Table, TableBody, Box, TableCell, TableHead, TableRow, Typography, Button, Grid, TableContainer, Paper, InputLabel, OutlinedInput} from '@mui/material'
@@ -17,6 +19,8 @@ import dayjs from 'dayjs';
   const {operation, setOperation} = useContext(StoreContext);
   const [sortedOperation, setSortedOperation] = useState<OperationObj[]>([]);
   const [searchValue, setSearchValue] = useState("");
+
+  const [play] = useSound(trashSound);
 
   useEffect(() => {
     let operationWithDate = operation.map((obj) => {
@@ -45,6 +49,7 @@ import dayjs from 'dayjs';
       await deleteDoc(doc(firebaseDb, "operations", id));
       const filtrOperation = operation.filter((element) => id !== element.id);
       setOperation(filtrOperation);
+      play();
     } catch(error) {
       console.log(error);
     }
