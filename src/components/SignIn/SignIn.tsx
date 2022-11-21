@@ -74,9 +74,6 @@ export function SignIn() {
                 autoComplete="email"
                 autoFocus
                 onChange={e => setEmail(e.target.value)}
-                // sx={{
-                //   backgroundColor: '#fefefe',
-                // }}
               />
               <TextField
                 margin="normal"
@@ -97,7 +94,7 @@ export function SignIn() {
               >
                 Loguje się
               </Button>
-              <Grid container justifyContent='flex-end'>
+              <Grid container justifyContent='center'>
                 <Grid item>
                   <RLink to='/signup'>
                     <Button color='primary'>
