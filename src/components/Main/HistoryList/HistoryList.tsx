@@ -57,12 +57,17 @@ import dayjs from 'dayjs';
   return (
     <Grid item xs={12} alignItems='center' justifyContent='center'>
       <Typography align='center' variant='h6'>Ostatnie operacje</Typography>
-      <Box>
+      <Box sx={{padding: -1}}>
         <InputLabel>Znajdź</InputLabel>
-        <OutlinedInput
-         type='text'
-         onChange={(event) => filterNames(event)}
-         placeholder={"Wpisz kategorię..."}
+        <OutlinedInput 
+          inputProps={{
+            style: {
+              padding: 8
+            }
+          }}
+          type='text'
+          onChange={(event) => filterNames(event)}
+          placeholder={"Wpisz kategorię..."}
         />
       </Box>
       <TableContainer component={Paper}>
