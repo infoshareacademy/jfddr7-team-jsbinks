@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {useContext} from 'react';
-import {Table, TableBody, TableCell, TableHead, TableRow, Typography, Button, Grid, TableContainer, Paper} from '@mui/material'
+import {useState, useContext} from 'react';
+// import SearchFilter from 'react-filter-search'
+import {Table, TableBody, Box, TableCell, TableHead, TableRow, Typography, Button, Grid, TableContainer, Paper, InputLabel, OutlinedInput, InputAdornment} from '@mui/material'
 import { doc, deleteDoc } from "firebase/firestore";
 import { firebaseDb } from '../../../index';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,11 +9,33 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { StoreContext } from '../../../StoreProvider';
 import { red, green } from "@mui/material/colors"
+import dayjs, { Dayjs } from 'dayjs';
 
 
  const HistoryList = () => {
   const {operation, setOperation} = useContext(StoreContext);
+  const [searchValue, setSearchValue] = useState<String | null>(null);
 
+  let operationWithDate = operation.map((obj) => {
+    return { ...obj, date: new Date(obj.date) };
+  })
+
+  const operationSort = operationWithDate.sort(
+    (objA, objB) => objB.date.getTime() - objA.date.getTime(),
+  );
+
+  const sortedOperation = operationSort.map((obj) => {
+    return { ...obj, date: dayjs(obj.date.toString()).format('DD/MM/YYYY') };
+  })
+
+  const handleOnClick = () => {
+      const findOperation = 
+      operation && operation?.length > 0 
+      ? operation?.filter(op => op?.category === searchValue)
+      : [];
+      setOperation(findOperation);
+  }
+  // dayjs(row.date.toString()).format('DD/MM/YYYY')
   const deleteItem = async (id: string): Promise<void> => {
     try {
       await deleteDoc(doc(firebaseDb, "operations", id));
@@ -27,6 +50,17 @@ import { red, green } from "@mui/material/colors"
   return (
     <Grid item xs={12} alignItems='center' justifyContent='center'>
       <Typography align='center' variant='h6'>Ostatnie operacje</Typography>
+      <Box>
+        <InputLabel>Wyszukaj operacje</InputLabel>
+            <OutlinedInput
+              value={searchValue}
+              placeholder={"Nazwa kategorii..."}
+              onChange={(event) => setSearchValue(event.target.value)}
+              startAdornment={<InputAdornment position="start"></InputAdornment>}
+              label="Search"
+            />
+        <Button disabled={!searchValue} onClick={handleOnClick}>Szukaj</Button>
+      </Box>
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableHead>
@@ -40,7 +74,7 @@ import { red, green } from "@mui/material/colors"
             </TableRow>
           </TableHead>
           <TableBody>
-            {operation.map((row, index) => (
+            {sortedOperation && sortedOperation?.length > 0 && sortedOperation?.map((row, index) => (
               <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">{row.type === 'Income' ? <AddIcon sx={{color: green[500]}}/> : <RemoveIcon sx={{color: red[500]}}/>}</TableCell>
                 <TableCell>{row.date}</TableCell>

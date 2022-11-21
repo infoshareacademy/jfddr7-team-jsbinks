@@ -24,12 +24,36 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
   const categoryColors =  categoryName === 'Income' ? Incomes : Expenses;
   const filterdOperations = operations.filter((operation) => operation.type === categoryName);
 
-  const data = filterdOperations.map((operation) => ({
-    name: operation.category,
-    value: operation.amount, 
-    fill: categoryColors.find((category) => operation.category === category.name)?.fill,
+
+ type holderObj = {
+    name: number;
+ }
+
+  let holder = {} as holderObj;
+
+  filterdOperations.forEach((obj) => {
+    if(holder.hasOwnProperty(obj.category)) {
+      holder[obj.category as keyof holderObj] = holder[obj.category as keyof holderObj] + obj.amount;
+    } else {
+      holder[obj.category as keyof holderObj] = obj.amount;
+    }
+  })
+
+  let filtredArray = [];
+
+  for (let prop in holder) {
+    filtredArray.push({name: prop, value: holder[prop as keyof holderObj]});
+  }
+
+
+
+  const data = filtredArray.map((operation) => ({
+      name: operation.name,
+      value: operation.value, 
+      fill: categoryColors.find((category) => operation.name === category.name)?.fill,
   }))
   const categoryValue = filterdOperations.reduce((prev, curr) => prev + curr.amount, 0)
+  console.log(filterdOperations);
 
   return (
     <Box
