@@ -1,19 +1,17 @@
-import {useState, useContext, useEffect} from 'react';
+import {useState, useContext} from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import {doc, setDoc} from 'firebase/firestore';
 import { firebaseDb } from '../../../index'
 import { v4 as uuid } from 'uuid';
-import { Category } from '../../../types';
 import { StoreContext } from '../../../StoreProvider';
 import { OperationObj } from '../../../StoreProvider';
 //materail UI
-import {Container, Typography, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button, Card, Box} from "@mui/material"
+import {Container, Select, FormControl, InputLabel, MenuItem, OutlinedInput, InputAdornment, TextField, Button} from "@mui/material"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { grey, red, green } from "@mui/material/colors"
+import { grey} from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
-import logo from '../../../images/logo.png'
 import { Balance } from '../Balance/Balance';
 
 const useStyles = makeStyles({
