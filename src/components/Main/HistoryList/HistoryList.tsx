@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
 // import SearchFilter from 'react-filter-search'
 import {Table, TableBody, Box, TableCell, TableHead, TableRow, Typography, Button, Grid, TableContainer, Paper, InputLabel, OutlinedInput, InputAdornment} from '@mui/material'
 import { doc, deleteDoc } from "firebase/firestore";
@@ -9,23 +9,32 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { StoreContext } from '../../../StoreProvider';
 import { red, green } from "@mui/material/colors"
+import { OperationObj } from '../../../StoreProvider';
 import dayjs from 'dayjs';
 
 
  const HistoryList = () => {
   const {operation, setOperation} = useContext(StoreContext);
+  const [sortedOperation, setSortedOperation] = useState<OperationObj[]>([]);
+  const [searchValue, setSearchValue] = useState("");
 
-  let operationWithDate = operation.map((obj) => {
-    return { ...obj, date: new Date(obj.date) };
-  })
+  useEffect(()=>{
+    let operationWithDate = operation.map((obj) => {
+      return { ...obj, date: new Date(obj.date) };
+    })
+  
+    const operationSort = operationWithDate.sort(
+      (objA, objB) => objB.date.getTime() - objA.date.getTime(),
+    );
+  
+    const sortedList = operationSort.map((obj) => {
+      return { ...obj, date: dayjs(obj.date.toString()).format('DD/MM/YYYY') };
+    })
+  
+    setSortedOperation(sortedList);
+  }, [operation, setSortedOperation])
 
-  const operationSort = operationWithDate.sort(
-    (objA, objB) => objB.date.getTime() - objA.date.getTime(),
-  );
-
-  const sortedOperation = operationSort.map((obj) => {
-    return { ...obj, date: dayjs(obj.date.toString()).format('DD/MM/YYYY') };
-  })
+ 
 
   const deleteItem = async (id: string): Promise<void> => {
     try {
@@ -37,10 +46,23 @@ import dayjs from 'dayjs';
     }
   }
 
+  const filterNames = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    console.log(e.target.value.toLowerCase());
+    setSearchValue(e.target.value.toLowerCase());
+    setSortedOperation(sortedOperation.filter(op => op.category.toLowerCase().includes(e.target.value.toLowerCase())));
+  }
 
   return (
     <Grid item xs={12} alignItems='center' justifyContent='center'>
       <Typography align='center' variant='h6'>Ostatnie operacje</Typography>
+      <Box>
+        <InputLabel>Znajdź</InputLabel>
+        <OutlinedInput
+         type='text'
+         onChange={(event) => filterNames(event)}
+         placeholder={"Wpisz kategorię..."}
+        />
+      </Box>
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableHead>
