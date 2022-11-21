@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState, useContext, useEffect} from 'react';
 // import SearchFilter from 'react-filter-search'
-import {Table, TableBody, Box, TableCell, TableHead, TableRow, Typography, Button, Grid, TableContainer, Paper, InputLabel, OutlinedInput, InputAdornment} from '@mui/material'
+import {Table, TableBody, Box, TableCell, TableHead, TableRow, Typography, Button, Grid, TableContainer, Paper, InputLabel, OutlinedInput} from '@mui/material'
 import { doc, deleteDoc } from "firebase/firestore";
 import { firebaseDb } from '../../../index';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,7 +18,7 @@ import dayjs from 'dayjs';
   const [sortedOperation, setSortedOperation] = useState<OperationObj[]>([]);
   const [searchValue, setSearchValue] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     let operationWithDate = operation.map((obj) => {
       return { ...obj, date: new Date(obj.date) };
     })
@@ -35,6 +35,7 @@ import dayjs from 'dayjs';
     if (searchValue) {
       setSortedOperation(sortedList.filter(op => op.category.toLowerCase().includes(searchValue)));
     }
+
   }, [operation, setSortedOperation, searchValue])
 
  
@@ -50,7 +51,6 @@ import dayjs from 'dayjs';
   }
 
   const filterNames = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    console.log(e.target.value.toLowerCase());
     setSearchValue(e.target.value.toLowerCase());
   }
 

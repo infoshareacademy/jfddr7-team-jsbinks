@@ -48,7 +48,7 @@ export const Form = () => {
       amount: Number(amount),
       category: category,
       type: incomeValue,
-      date: entryDate ? dayjs(entryDate.toString()).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'), 
+      date: entryDate ? dayjs(entryDate.toString()).format('MM/DD/YYYY') : dayjs().format('MM/DD/YYYY'), 
     }
     try {
       await setDoc(doc(firebaseDb, 'operations', OperationObject.id), {
