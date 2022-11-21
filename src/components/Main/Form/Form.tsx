@@ -1,6 +1,6 @@
 import {useState, useContext, useEffect} from 'react';
 import useSound from 'use-sound';
-import moneySound from '../../Sound/moneySound.mp3';
+import moneySound from '../../../Sound/moneySound.mp3';
 import dayjs, { Dayjs } from 'dayjs';
 import {doc, setDoc} from 'firebase/firestore';
 import { firebaseDb } from '../../../index'
@@ -15,7 +15,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { grey} from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
 import { Balance } from '../Balance/Balance';
-import { PlaceOutlined } from '@mui/icons-material';
 
 const useStyles = makeStyles({
   container: {
@@ -125,7 +124,7 @@ export const Form = () => {
             renderInput={(params) => <TextField fullWidth {...params} />}
           />
         </LocalizationProvider>
-        <Button type='submit' variant="contained" size="large" onClick={addOperation}>
+        <Button type='submit' variant="contained" size="medium" onClick={addOperation}>
           Dodaj operację
         </Button>
       </form>

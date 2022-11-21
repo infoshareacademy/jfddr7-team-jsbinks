@@ -19,7 +19,6 @@ export const MainView: React.FC = () => {
 
   const onLogout = async (): Promise<void> => {
     await signOut(firebaseAuth);
-    console.log('the user singed out')
     navigate('/signin');
   }
 
@@ -65,12 +64,12 @@ export const MainView: React.FC = () => {
           justifyContent="center"
           alignItems="flex-start"
         >
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={6} sm={3} sx={{margin: 1}}>
             <Chart categoryName='Income' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories} />
           </Grid>
-          <Grid item xs={12} sm={6} justifyContent='center' alignItems='center'>
+          <Grid item xs={12} sm={5} justifyContent='center' alignItems='center'>
               <Form />
-              <HistoryList />
+              {operation.length > 0 && <HistoryList />}
           </Grid>
           <Grid item xs={6} sm={3}>
             <Chart categoryName='Expense' operations={operation} Incomes={incomeCategories} Expenses={expenseCategories}/>

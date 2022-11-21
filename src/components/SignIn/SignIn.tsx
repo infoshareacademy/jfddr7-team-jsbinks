@@ -20,7 +20,6 @@ export function SignIn() {
       event.preventDefault()
       signInWithEmailAndPassword(firebaseAuth, email, password)
       .then(cred => {
-        console.log('user logged in', cred.user)
         navigate('/wallet')
       })
       .catch (e => {
@@ -28,6 +27,8 @@ export function SignIn() {
           setError("Błędny mail lub hasło")
         } else if (e.code === 'auth/user-not-found') {
           setError("Nie ma takiego użytkownikia")
+        } else if (e.code === 'auth/invalid-email') {
+          setError("Podaj poprawnie zapisany e-mail i hasło")
         } else {
           setError('Coś poszło nie tak, spróbuj ponownie później')
         }

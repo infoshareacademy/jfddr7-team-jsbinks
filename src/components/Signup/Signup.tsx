@@ -22,7 +22,6 @@ export const SignUp = () => {
 
       createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(cred=>{
-        console.log("user created", cred.user)
         navigate('/signin')
       })
       .catch(e => {
