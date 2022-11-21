@@ -1,4 +1,6 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
+import useSound from 'use-sound';
+import moneySound from '../../Sound/moneySound.mp3';
 import dayjs, { Dayjs } from 'dayjs';
 import {doc, setDoc} from 'firebase/firestore';
 import { firebaseDb } from '../../../index'
@@ -13,6 +15,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { grey} from "@mui/material/colors"
 import { makeStyles } from "@mui/styles"
 import { Balance } from '../Balance/Balance';
+import { PlaceOutlined } from '@mui/icons-material';
 
 const useStyles = makeStyles({
   container: {
@@ -34,6 +37,8 @@ export const Form = () => {
   const classes = useStyles()
   const { username, operation, setOperation, incomeCategories, expenseCategories} = useContext(StoreContext);
 
+  const [play] = useSound(moneySound);
+
   const [entryDate, setEntryDate] = useState<Dayjs | null>(null);
   const [incomeValue, setIncomeValue] = useState('');
   const [category, setCategory] = useState('');
@@ -53,6 +58,7 @@ export const Form = () => {
           name: OperationObject,
           userEmail: username,
       });
+      play();
       const updatedOperations = [...operation, OperationObject];
       setOperation(updatedOperations);
     } catch (error) {
