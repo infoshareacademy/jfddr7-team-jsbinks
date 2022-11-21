@@ -53,7 +53,6 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
       fill: categoryColors.find((category) => operation.name === category.name)?.fill,
   }))
   const categoryValue = filterdOperations.reduce((prev, curr) => prev + curr.amount, 0)
-  console.log(filterdOperations);
 
   return (
     <Box
