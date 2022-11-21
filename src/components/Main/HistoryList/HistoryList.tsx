@@ -1,6 +1,6 @@
 import * as React from 'react';
 import useSound from 'use-sound';
-import trashSound from '../../Sound/trashSound.mp3';
+import trashSound from '../../../Sound/trashSound.mp3';
 import {useState, useContext, useEffect} from 'react';
 // import SearchFilter from 'react-filter-search'
 import {Table, TableBody, Box, TableCell, TableHead, TableRow, Typography, Button, Grid, TableContainer, Paper, InputLabel, OutlinedInput} from '@mui/material'
