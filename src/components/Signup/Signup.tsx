@@ -108,7 +108,7 @@ export const SignUp = () => {
               >
                 Rejestruję się
               </Button>
-              <Grid container justifyContent="flex-end">
+              <Grid container justifyContent="center">
                 <Grid item>
                   <RLink to='/signin'>
                       <Button>

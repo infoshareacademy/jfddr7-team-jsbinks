@@ -45,7 +45,6 @@ export const Form = () => {
   const [amount, setAmount] = useState<string>('');
 
   const addOperation = async (): Promise<void> => {
-    console.log(entryDate);
     const OperationObject: OperationObj = {
       id: uuid(),
       amount: Number(amount),
@@ -78,13 +77,14 @@ export const Form = () => {
       <Balance />
       <form className={classes.formStyle} onSubmit={e => e.preventDefault()}>
         <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Dochód/Wydatek</InputLabel>
+        <InputLabel id="demo-simple-select-label">Typ</InputLabel>
           <Select
             onChange={(event) => setIncomeValue(event.target.value)}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={incomeValue}
             label="Income"
+            required
           >
             <MenuItem value='Income'>Dochody</MenuItem>
             <MenuItem value='Expense'>Wydatki</MenuItem>
@@ -98,6 +98,7 @@ export const Form = () => {
               id="demo-simple-select"
               value={category}
               label="Category"
+              required
             >
               {renderCatergories(incomeValue)}
             </Select>
