@@ -9,12 +9,11 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { StoreContext } from '../../../StoreProvider';
 import { red, green } from "@mui/material/colors"
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 
  const HistoryList = () => {
   const {operation, setOperation} = useContext(StoreContext);
-  const [searchValue, setSearchValue] = useState<String | null>(null);
 
   let operationWithDate = operation.map((obj) => {
     return { ...obj, date: new Date(obj.date) };
@@ -28,14 +27,6 @@ import dayjs, { Dayjs } from 'dayjs';
     return { ...obj, date: dayjs(obj.date.toString()).format('DD/MM/YYYY') };
   })
 
-  const handleOnClick = () => {
-      const findOperation = 
-      operation && operation?.length > 0 
-      ? operation?.filter(op => op?.category === searchValue)
-      : [];
-      setOperation(findOperation);
-  }
-  // dayjs(row.date.toString()).format('DD/MM/YYYY')
   const deleteItem = async (id: string): Promise<void> => {
     try {
       await deleteDoc(doc(firebaseDb, "operations", id));
@@ -50,17 +41,6 @@ import dayjs, { Dayjs } from 'dayjs';
   return (
     <Grid item xs={12} alignItems='center' justifyContent='center'>
       <Typography align='center' variant='h6'>Ostatnie operacje</Typography>
-      <Box>
-        <InputLabel>Wyszukaj operacje</InputLabel>
-            <OutlinedInput
-              value={searchValue}
-              placeholder={"Nazwa kategorii..."}
-              onChange={(event) => setSearchValue(event.target.value)}
-              startAdornment={<InputAdornment position="start"></InputAdornment>}
-              label="Search"
-            />
-        <Button disabled={!searchValue} onClick={handleOnClick}>Szukaj</Button>
-      </Box>
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableHead>
