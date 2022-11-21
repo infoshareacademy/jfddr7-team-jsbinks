@@ -32,7 +32,10 @@ import dayjs from 'dayjs';
     })
   
     setSortedOperation(sortedList);
-  }, [operation, setSortedOperation])
+    if (searchValue) {
+      setSortedOperation(sortedList.filter(op => op.category.toLowerCase().includes(searchValue)));
+    }
+  }, [operation, setSortedOperation, searchValue])
 
  
 
@@ -49,7 +52,6 @@ import dayjs from 'dayjs';
   const filterNames = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     console.log(e.target.value.toLowerCase());
     setSearchValue(e.target.value.toLowerCase());
-    setSortedOperation(sortedOperation.filter(op => op.category.toLowerCase().includes(e.target.value.toLowerCase())));
   }
 
   return (
