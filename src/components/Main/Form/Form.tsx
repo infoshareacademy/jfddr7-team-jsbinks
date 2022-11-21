@@ -82,7 +82,7 @@ export const Form = () => {
             value={incomeValue}
             label="Income"
           >
-            <MenuItem value='Income'>Wpływy</MenuItem>
+            <MenuItem value='Income'>Dochody</MenuItem>
             <MenuItem value='Expense'>Wydatki</MenuItem>
           </Select>
         </FormControl>

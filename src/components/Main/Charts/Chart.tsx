@@ -73,7 +73,7 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
       <Box sx={{
         paddingBottom: 2
       }}>
-        <ResponsiveContainer width='100%' minWidth={150} height={280}>
+        <ResponsiveContainer width='100%' minWidth={170} height={280}>
           <PieChart >
             <Legend
               height={0}
@@ -85,10 +85,10 @@ export const Chart = ({ operations, categoryName, Incomes, Expenses }: {
             />
             <Pie
               data={data}
-              cx="50%"
+              cx="52%"
               cy="40%"
-              innerRadius={30}
-              outerRadius={65}
+              innerRadius={27}
+              outerRadius={61}
               fill="#8884d8"
               paddingAngle={0}
               dataKey="value"

@@ -55,7 +55,7 @@ export const MainView: React.FC = () => {
           </Toolbar>
         </AppBar>
         <Box sx={{
-          maxWidth: '1200px'
+          maxWidth: '1440px'
         }}
         >
         <Grid 
